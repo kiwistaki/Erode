@@ -1,0 +1,6 @@
+How to create "Enemy":
+1- create EnemyState script
+2- create each EnemyState state script ( EnemyIdleState, EnemyAttackState,ect)
+3- create EnemyCharacterStateMachine script
+4- create EnemyController script
+5- create EnemyAnimator animator
