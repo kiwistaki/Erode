@@ -8,12 +8,12 @@ namespace Assets.Scripts.Control
 
     public abstract class HunterState : AbstractState
     {
-        protected readonly HunterAI _hunterAI = null;
+        protected readonly HunterController _hunterController = null;
         protected readonly object _args = null;
 
-        protected HunterState(HunterAI hunter, object args)
+        protected HunterState(HunterController hunter, object args)
         {
-            this._hunterAI = hunter;
+            this._hunterController = hunter;
             this._args = args;
         }
 

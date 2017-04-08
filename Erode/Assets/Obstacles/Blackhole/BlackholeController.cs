@@ -4,22 +4,25 @@ using UnityEngine;
 
 public class BlackholeController : MonoBehaviour
 {
-    public GameObject BlackholeVFX;
-    public float MoveSpeed = 50.0f;
-    public float _LifeExpectancy = 5.0f;
-    public float GetTargetTime = 1.0f;
-    public float PlayerMultiplier = 0.2f;
-    GameObject[] _asteroid;
-    GameObject _player;
-    GameObject[] _hunter;
-    GameObject _blackhole;
+    public GameObject   BlackholeVFX;
+    public float        MoveSpeed = 50.0f;
+    public float        LifeExpectancy = 5.0f;
+    public float        GetTargetTime = 1.0f;
+    public float        PlayerMultiplier = 0.2f;
+    GameObject[] _charger;
+
+    private GameObject[]    _asteroid;
+    private GameObject      _player;
+    private GameObject[]    _hunter;
+    private GameObject      _blackhole;
+    private GameManager     _gameManager;
 
 
 	void Awake ()
     {
-        
         this._blackhole = Instantiate(this.BlackholeVFX, this.transform.position, Quaternion.identity);
-	}
+        this._gameManager = GameObject.Find("MainCamera").GetComponent<GameManager>();
+    }
 
     void Start()
     {
@@ -32,6 +35,7 @@ public class BlackholeController : MonoBehaviour
         Aspire(this._player);
         Aspire(this._hunter);
         Aspire(this._asteroid);
+        Aspire(this._charger);
 	}
 
     void GetTarget()
@@ -39,12 +43,13 @@ public class BlackholeController : MonoBehaviour
         this._player = GameObject.FindGameObjectWithTag("Player");
         this._hunter = GameObject.FindGameObjectsWithTag("Hunter");
         this._asteroid = GameObject.FindGameObjectsWithTag("Asteroid");
+        this._charger = GameObject.FindGameObjectsWithTag("Charger");
     }
 
     void Die()
     {
-        Destroy(this._blackhole.gameObject, _LifeExpectancy);
-        Destroy(this.gameObject,_LifeExpectancy);
+        Destroy(this._blackhole.gameObject, LifeExpectancy);
+        Destroy(this.gameObject, LifeExpectancy);
     }
 
     void Aspire(GameObject obj)
@@ -87,13 +92,22 @@ public class BlackholeController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Player" || other.tag == "Hammer")
+        switch (other.tag)
         {
-            //Do something for player
-        }
-        else
-        {
-            Destroy(other.gameObject);
+            case "Player":
+                other.gameObject.SetActive(false);
+                this._gameManager.GameOverRequest();
+                break;
+
+            case "Hammer":
+                break;
+
+            case "Boundary":
+                break;
+
+            default:
+                Destroy(other.gameObject);
+                break;
         }
     }
 }

@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 412199366c707a94c9183cae676a25f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpawnTime: 3
+  SpawnTime: 2
   Asteroide:
   - {fileID: 173668, guid: 965a95650c5ae2a48b35aa03ca4a0a31, type: 2}
   - {fileID: 190680, guid: 72776d15a565f3f499c3d02414de971e, type: 2}

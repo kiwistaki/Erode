@@ -8,7 +8,7 @@ namespace Assets.Scripts.Control
 {
     public class HunterFollowState: HunterState
     {
-        public HunterFollowState(HunterAI hunter) : base(hunter, null)
+        public HunterFollowState(HunterController hunter) : base(hunter, null)
         {
         }
 
@@ -16,28 +16,28 @@ namespace Assets.Scripts.Control
         public override void Enter()
         {
             //this._hunterAI.HunterAnimator.SetTrigger("HunterFear");
-            this._hunterAI.HunterAnimator.SetTrigger("Follow");
-            this._hunterAI.HunterAnimator.SetFloat("MoveSpeed", this._hunterAI.MoveSpeed);
+            this._hunterController.HunterAnimator.SetTrigger("Follow");
+            this._hunterController.HunterAnimator.SetFloat("MoveSpeed", this._hunterController.MoveSpeed);
         }
 
         public override void OnStateUpdate()
         {
-            if (this._hunterAI.IsWithinAttackRange())
+            if (this._hunterController.IsWithinAttackRange())
             {
-                this._hunterAI.ChangeState(HunterCharacterStateMachine.HunterState.Attack);
+                this._hunterController.ChangeState(HunterCharacterStateMachine.HunterState.Attack);
             }
 
-            if(!this._hunterAI.WillFollow())
+            if(!this._hunterController.WillFollow())
             {
-                this._hunterAI.ChangeState(HunterCharacterStateMachine.HunterState.Idle);
+                this._hunterController.ChangeState(HunterCharacterStateMachine.HunterState.Idle);
             }
 
-            this._hunterAI.ProcessMovement();
+            this._hunterController.ProcessMovement();
         }
 
         public override void Exit()
         {
-            this._hunterAI.HunterAnimator.SetFloat("MoveSpeed", 0.0f);
+            this._hunterController.HunterAnimator.SetFloat("MoveSpeed", 0.0f);
         }
 
         public override HunterCharacterStateMachine.HunterState GetStateType()

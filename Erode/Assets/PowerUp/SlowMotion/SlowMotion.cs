@@ -4,43 +4,40 @@ using UnityEngine.UI;
 using System;
 using Assets.Scripts.iTween;
 using MirzaBeig.ParticleSystems;
+using System.Collections.Generic;
+using Assets.Scripts.Utils;
 
 namespace Assets.PowerUps.SlowMotion
 {
     public class SlowMotion : AbstractPowerUp
     {
-        public float DurationOverride = 9f;
-        public float LifetimeOverride = 4.5f;
         public GameObject ExpirePrefab;
 
         private Image _slowMotionImage;
+        private bool _timerLock = false;
+        private PowerUpController _powerUpController;
 
-        private void Awake()
+        private new void Awake()
         {
             base.Awake();
-            base.Duration = this.DurationOverride;
-            base.Lifetime = this.LifetimeOverride;
             iTween.MoveBy(this.gameObject, iTween.Hash
                 ("amount", this.transform.up * 0.3f
                 , "time", 1.0f
                 , "looptype", iTween.LoopType.pingPong
                 , "easetype", iTween.EaseType.easeInOutBack
                 ));
-            _slowMotionImage = GameObject.Find("SlowMotionPanel").GetComponent<Image>();
+            _slowMotionImage = GameObject.Find("HUDInfosPanel").GetComponent<Image>();
+            _powerUpController = Camera.main.GetComponent<PowerUpController>();
         }
 
         protected override void ActivatePowerUp()
         {
-            Time.timeScale = .3f;
-            this._playerController.PlayerAnimator.speed = 1 / Time.timeScale;
-            _slowMotionImage.enabled = true;
+            _powerUpController.ActivatePowerUpEffect(PowerUpType.SlowMotion, this.Duration);
         }
 
         protected override void DeactivatePowerUp()
         {
-            Time.timeScale = 1f;
-            this._playerController.PlayerAnimator.speed = Time.timeScale;
-            _slowMotionImage.enabled = false;
+            _powerUpController.DeactivatePowerUpEffect(PowerUpType.SlowMotion);
         }
 
         protected override void Expire()
@@ -52,7 +49,6 @@ namespace Assets.PowerUps.SlowMotion
 
         protected override void UpdatePowerUp()
         {
-            
         }
     }
 }

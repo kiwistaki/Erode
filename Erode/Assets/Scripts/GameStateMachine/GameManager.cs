@@ -1,7 +1,10 @@
 ﻿using Assets.Scripts.Control;
 using Assets.Scripts.HexGridGenerator;
+using Assets.Scripts.iTween;
+using Assets.Scripts.Level;
 using Assets.Scripts.Utils;
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -14,29 +17,34 @@ public class GameManager : MonoBehaviour {
     public Text TimerValue;
     public Text ScoreValue;
     public Text FinalScore;
-    
 
-    public static int timeScore;
-    public static int destroyScore;
-    public static int scoreMultiplier = 1;
-    public static int difficultyMultiplier = 1;
-
-    public static int totalScore = (timeScore + destroyScore) * difficultyMultiplier;
-    
+    public enum BonusIconType
+    {
+        Undefined = -1,
+        SuperSpeed,
+        SlowMotion,
+        ScoreMultiplier
+    }
 
     private float _gameTimer;
+    private float _nextScoreUpdate;
     private float _lastTimeScale;
     private Canvas _mainMenuCanvas;
     private Canvas _HUDCanvas;
     private Canvas _pauseCanvas;
     private Canvas _endGameCanvas;
     private LeaderboardManager _leaderboardManager;
+    private ScoreManager _scoreManager;
+    private LevelManager _levelManager;
+
 
     private Context _context;
 
     private Vector3 _cameraInitialPosition;
     private Quaternion _cameraInitialRotation;
     private Vector3 _cameraInitialLocalScale;
+
+    private float _scoreUpdateFrequency = 25f; // per second
 
     // Use this for initialization
     void Start () {
@@ -45,6 +53,8 @@ public class GameManager : MonoBehaviour {
         _pauseCanvas = GameObject.Find("PauseCanvas").GetComponent<Canvas>();
         _endGameCanvas = GameObject.Find("EndGameCanvas").GetComponent<Canvas>();
         _leaderboardManager = GameObject.Find("MainCamera").GetComponent<LeaderboardManager>();
+        _scoreManager = GameObject.Find("MainCamera").GetComponent<ScoreManager>();
+        _levelManager = Camera.main.GetComponent<LevelManager>();
 
         _mainMenuCanvas.enabled = true;
         _HUDCanvas.enabled = false;
@@ -59,13 +69,7 @@ public class GameManager : MonoBehaviour {
         _cameraInitialLocalScale = _cameraTransform.localScale;
 
         _context = new Context(new NewGameState(this));
-
-        timeScore = 0;
-        destroyScore = 0;
-        totalScore = 0;
-
-        //Il faut augmenter les points liés au temps de cette facon, afin que le multiplicateur de score fonctionne
-        InvokeRepeating("UpdateScore", 0f, 1.0f);
+       
         Time.timeScale = 0f;
         Initialize();
     }
@@ -80,6 +84,7 @@ public class GameManager : MonoBehaviour {
         _cameraTransform.localScale = _cameraInitialLocalScale;
 
         _gameTimer = 0;
+        _nextScoreUpdate = 1f/_scoreUpdateFrequency;
         _lastTimeScale = Time.timeScale;
 
         Grid.GenerateGrid();
@@ -97,7 +102,6 @@ public class GameManager : MonoBehaviour {
 
     void UpdateGameTimer()
     {
-        float timeScale = Time.timeScale;
         _gameTimer += Utils.getRealDeltaTime();
         int min = (int)_gameTimer / 60; // calculate the minutes
         int sec = (int) _gameTimer % 60; // calculate the seconds
@@ -105,17 +109,22 @@ public class GameManager : MonoBehaviour {
         TimerValue.text = min < 10 ? "0" + min : min.ToString();
         TimerValue.text += ":";
         TimerValue.text += sec < 10 ? "0" + sec : sec.ToString();
-                
-        totalScore = (timeScore + destroyScore) * difficultyMultiplier;
 
-        ScoreValue.text = totalScore.ToString();
+
+        _scoreManager.UpdateTotalScore();
+
+        ScoreValue.text = _scoreManager.getScore().ToString();
 
     }
 
-    //Il faut augmenter les points liés au temps de cette facon, afin que le multiplicateur de score fonctionne
     void UpdateScore() 
     {
-        timeScore += 1*scoreMultiplier;
+        if(_gameTimer > _nextScoreUpdate)
+        {
+            _scoreManager.UpdateTimeScore(1f/_scoreUpdateFrequency);
+            _nextScoreUpdate += 1f / _scoreUpdateFrequency;
+        }
+        
     }
 
     void WaitStartNewGame()
@@ -126,7 +135,7 @@ public class GameManager : MonoBehaviour {
     // Function to call to disable the mainmenu and start the game
     void StartNewGame()
     {
-        Initialize();
+        //Initialize();
 
         // Manage canvas
         _mainMenuCanvas.enabled = false;
@@ -139,9 +148,7 @@ public class GameManager : MonoBehaviour {
         Time.timeScale = 1.0f;
         EndGameBoxCollider.enabled = true;
 
-        timeScore = 0;
-        destroyScore = 0;
-        scoreMultiplier = 1;
+        _scoreManager.initializePointsForNewGame();
     }
 
     void PauseGame()
@@ -149,12 +156,13 @@ public class GameManager : MonoBehaviour {
         // Manage canvas
         _mainMenuCanvas.enabled = false;
         _pauseCanvas.enabled = true;
-        _HUDCanvas.enabled = false;
+        _HUDCanvas.enabled = true;
         _endGameCanvas.enabled = false;
 
         // Manage in-game property
         _lastTimeScale = Time.timeScale;
         Time.timeScale = 0.0f;
+        //iTween.Pause();
     }
 
     void UnpauseGame()
@@ -167,6 +175,7 @@ public class GameManager : MonoBehaviour {
 
         // Manage in-game property
         Time.timeScale = _lastTimeScale;
+        //iTween.Resume();
     }
 
     bool EndGame()
@@ -213,17 +222,67 @@ public class GameManager : MonoBehaviour {
             if (Input.GetButtonUp("Fire1"))
             {
                 g_manager.StartNewGame();
+                context.State = new InstructionGameState(g_manager);
+            }
+        }
+    }
+
+    class InstructionGameState : State
+    {
+        private GameObject HUD = GameObject.Find("HUDInfosPanel");
+        public InstructionGameState(GameManager manager)
+        {
+            HUD.SetActive(false);
+
+        }
+        public override void Handle(Context context, GameManager g_manager, LeaderboardManager l_manager)
+        {
+            
+
+            if (Input.GetButtonDown("Back"))
+            {
+                HUD.SetActive(true);
+                GameObject.Find("InstructionPanel").SetActive(false);
+                GameObject.Find("MainCamera").GetComponent<LevelManager>().StartGame();
                 context.State = new InGameState(g_manager);
+            }
+
+            if (Input.GetButtonDown("RightBumper")) 
+            {
+                int levelInt = (int)g_manager._levelManager.getLevel();
+                levelInt += 1;
+                if (levelInt < 15)
+                {
+                    g_manager._levelManager.IncreaseLevel();
+                    GameObject.Find("LevelText").GetComponent<Text>().text = "Level " + ++levelInt;
+                }
+                
+            }
+
+            if (Input.GetButtonDown("LeftBumper"))
+            {
+                int levelInt = (int)g_manager._levelManager.getLevel();
+                levelInt -= 1;
+                if (levelInt > 0)
+                {
+                    g_manager._levelManager.DecreaseLevel();
+                    GameObject.Find("LevelText").GetComponent<Text>().text = "Level " + ++levelInt;
+
+                }
             }
         }
     }
 
     class InGameState : State
     {
-        public InGameState(GameManager manager) {  }
+        public InGameState(GameManager manager)
+        {
+            
+        }
         public override void Handle(Context context, GameManager g_manager, LeaderboardManager l_manager)
         {
             g_manager.UpdateGameTimer();
+            g_manager.UpdateScore();
             if (Input.GetButtonDown("Pause"))
             {
                 g_manager.PauseGame();
@@ -248,65 +307,59 @@ public class GameManager : MonoBehaviour {
     class GameOverState : State
     {
         private int _highscoreLetter = 1;
-        private bool _isHighscore = false;
-        private bool _axisInUse = false;
+        private static bool _isNameSelectionOver = false;
+        private bool _isAxisInUse = false;
         private GameObject restartButton = GameObject.Find("RestartButton");
 
         public GameOverState(GameManager manager)
         {
-           _isHighscore = manager.EndGame();
-            if (_isHighscore)
+            _isNameSelectionOver = !manager.EndGame();
+            if (!_isNameSelectionOver)
                 restartButton.SetActive(false);
         }
         public override void Handle(Context context, GameManager g_manager, LeaderboardManager l_manager)
         {
-            if(_isHighscore)
+            if (!_isAxisInUse)
             {
-                if (!_axisInUse)
+                if (!_isNameSelectionOver)
                 {
-                    if (Input.GetAxisRaw("PadVertical") > 0) // Up
+                    if (Input.GetAxisRaw("PadVertical") < 0 || Input.GetAxisRaw("PadVerticalBoard") > 0) // Up
                     {
-                        _axisInUse = true;
+                        _isAxisInUse = true;
                         l_manager.ChangeCurrentHighscoreLetter(_highscoreLetter, true);
                     }
-                    if (Input.GetAxisRaw("PadVertical") < 0) // Down
+                    if (Input.GetAxisRaw("PadVertical") > 0 || Input.GetAxisRaw("PadVerticalBoard") < 0) // Down
                     {
-                        _axisInUse = true;
+                        _isAxisInUse = true;
                         l_manager.ChangeCurrentHighscoreLetter(_highscoreLetter, false);
                     }
-                    if (Input.GetAxisRaw("PadHorizontal") < 0) // Left
+                    if (Input.GetButtonDown("Fire1") || Input.GetAxisRaw("PadHorizontalBoard") > 0) // Right
                     {
-                        _axisInUse = true;
-                        if (_highscoreLetter > 1)
-                        {
-                            l_manager.ChangeCurrentHighscoreBlinkingLetter(--_highscoreLetter);
-                        }
-                    }
-                    if (Input.GetAxisRaw("PadHorizontal") > 0) // Right
-                    {
-                        _axisInUse = true;
+                        _isAxisInUse = true;
                         if (_highscoreLetter >= 3)
                         {
                             // STOP BLINKING AND ACTIVATE BUTTON
                             l_manager.StopBlinkingLetter();
-                           restartButton.SetActive(true);
-                            _isHighscore = false;
+                            restartButton.SetActive(true);
+                            _isNameSelectionOver = true;
                         }
                         l_manager.ChangeCurrentHighscoreBlinkingLetter(++_highscoreLetter);
                     }
                 }
                 else
                 {
-                    if (Input.GetAxisRaw("PadHorizontal") == 0 && Input.GetAxisRaw("PadVertical") == 0)
-                        _axisInUse = false;
+                    if (Input.GetButtonUp("Fire1"))
+                    {
+                        g_manager.WaitStartNewGame();
+                        context.State = new NewGameState(g_manager);
+                    }
                 }
             }
             else
             {
-                if (Input.GetButtonUp("Fire1"))
+                if (Input.GetAxisRaw("PadHorizontal") == 0 && Input.GetAxisRaw("PadVertical") == 0 && !Input.GetButton("Fire1"))
                 {
-                    g_manager.WaitStartNewGame();
-                    context.State = new NewGameState(g_manager);
+                    _isAxisInUse = false;
                 }
             }
         }

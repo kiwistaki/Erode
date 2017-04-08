@@ -22,8 +22,9 @@ namespace Assets.Scripts.Control
             this._playerController.AsteroidCollisionEvent += this.AsteroidCollision;
             this._playerController.CometCollisionEvent -= this._playerController.DefaultCollision;
             this._playerController.CometCollisionEvent += this.CometCollision;
-            //Register to hunter collision
+            //Register to enemy collision
             this._playerController.HunterCollisionEvent += this.HunterCollision;
+            this._playerController.ShooterCollisionEvent += this.ShooterCollision;
             //Show hammer
             this._playerController.EquipWeapons(PlayerController.EquippedWeapons.Hammer);
             this._playerController.SetHammerType(HammerController.HammerType.Disabled);
@@ -37,15 +38,15 @@ namespace Assets.Scripts.Control
                 this._releasedButton = true;
             }
             //Making sure we're not in Blitz too long
-            if ((this._time += Time.deltaTime) >= this._playerController.BlitzMaxTime)
+            if ((this._time += Utils.Utils.getRealDeltaTime()) >= this._playerController.BlitzMaxTime)
             {
-                this._playerController.ChangeState(PlayerCharacterStateMachine.PlayerStates.HammerChargedStrike);
+                this._playerController.ChangeState(PlayerCharacterStateMachine.PlayerStates.HammerChargedStrike, HammerController.HammerType.ChargedLow);
             }
             else if (this._time >= this._playerController.BlitzMinTime)
             {
                 if (this._releasedButton)
                 {
-                    this._playerController.ChangeState(PlayerCharacterStateMachine.PlayerStates.HammerChargedStrike);
+                    this._playerController.ChangeState(PlayerCharacterStateMachine.PlayerStates.HammerChargedStrike, HammerController.HammerType.ChargedLow);
                 }
             }
             this.BlitzMovement();
@@ -60,8 +61,9 @@ namespace Assets.Scripts.Control
             this._playerController.AsteroidCollisionEvent += this._playerController.DefaultCollision;
             this._playerController.CometCollisionEvent -= this.CometCollision;
             this._playerController.CometCollisionEvent += this._playerController.DefaultCollision;
-            //Unregister hunter collisions
+            //Unregister enemy collisions
             this._playerController.HunterCollisionEvent -= this.HunterCollision;
+            this._playerController.ShooterCollisionEvent -= this.ShooterCollision;
         }
 
         public void AsteroidCollision(GameObject asteroid)
@@ -81,9 +83,16 @@ namespace Assets.Scripts.Control
 
         public void HunterCollision(GameObject hunter)
         {
-            //HunterAi.OnAsteroidCollision is actually a generic collision funtion
-            hunter.GetComponent<HunterAI>().OnAsteroidCollision(this._playerController.gameObject);
+            //HunterController.OnAsteroidCollision is actually a generic collision funtion
+            hunter.GetComponent<HunterController>().OnAsteroidCollision(this._playerController.gameObject);
             this._playerController.PlayHitEffect(this._playerController.transform.position + (hunter.transform.position - this._playerController.transform.position) * 0.5f);
+        }
+
+        public void ShooterCollision(GameObject shooter)
+        {
+            //ShooterController.OnAsteroidCollision is actually a generic collision funtion
+            shooter.GetComponent<ShooterController>().OnAsteroidCollision(this._playerController.gameObject);
+            this._playerController.PlayHitEffect(this._playerController.transform.position + (shooter.transform.position - this._playerController.transform.position) * 0.5f);
         }
 
         private void BlitzMovement()
@@ -101,7 +110,7 @@ namespace Assets.Scripts.Control
             if (input != Vector3.zero)
             {
                 this._playerController.transform.rotation =
-                    Quaternion.Slerp(this._playerController.transform.rotation, Quaternion.LookRotation(input.normalized), this._playerController.BlitzTurnSpeed * Time.deltaTime);
+                    Quaternion.Slerp(this._playerController.transform.rotation, Quaternion.LookRotation(input.normalized), this._playerController.BlitzTurnSpeed * Utils.Utils.getRealDeltaTime());
             }
             
             //Apply movement

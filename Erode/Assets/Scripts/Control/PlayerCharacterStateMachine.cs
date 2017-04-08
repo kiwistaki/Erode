@@ -16,7 +16,8 @@ namespace Assets.Scripts.Control
             Spin,
             Knockbacked,
             Stunned,
-            Repairing
+            Repairing,
+            Injured
         }
 
         private readonly PlayerController _playerController;
@@ -47,7 +48,7 @@ namespace Assets.Scripts.Control
                     break;
 
                 case PlayerStates.HammerChargedStrike:
-                    base.ChangeState(new HammerChargedStrikeState(this._playerController));;
+                    base.ChangeState(new HammerChargedStrikeState(this._playerController, args));;
                     break;
 
                 case PlayerStates.Blitz:
@@ -62,7 +63,7 @@ namespace Assets.Scripts.Control
                     base.ChangeState(new KnockbackedState(this._playerController, args));
                     break;
 
-                    case PlayerStates.Stunned:
+                case PlayerStates.Stunned:
                     base.ChangeState(new StunnedState(this._playerController, args));
                     break;
 
@@ -70,6 +71,9 @@ namespace Assets.Scripts.Control
                     base.ChangeState(new RepairingState(this._playerController));
                     break;
 
+                case PlayerStates.Injured:
+                    base.ChangeState(new InjuredState(this._playerController, args));
+                    break;
                 default:
                     throw new UnityException("PlayerCharacterStateMachine::ChangeState: " + state.ToString() + " IS NOT IMPLEMENTED");
             }

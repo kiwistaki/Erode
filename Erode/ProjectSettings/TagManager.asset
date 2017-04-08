@@ -17,6 +17,13 @@ TagManager:
   - Hunter
   - Target
   - Onyx
+  - Barriere
+  - Charger
+  - Undefined
+  - Bolt
+  - ShooterGun
+  - Boundary
+  - Shooter
   layers:
   - Default
   - TransparentFX
@@ -26,7 +33,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - Platform
   - 
   - 
   - 

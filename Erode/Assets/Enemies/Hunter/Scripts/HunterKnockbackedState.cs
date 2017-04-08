@@ -12,24 +12,24 @@ namespace Assets.Scripts.Control
         private float _knockbackTime;
         private Vector3 _collisionImpulse;
 
-        public HunterKnockbackedState(HunterAI hunter, object args) : base(hunter, args)
+        public HunterKnockbackedState(HunterController hunter, object args) : base(hunter, args)
         {
             this._collidingObject = args as GameObject;
 
-            this._collisionImpulse = this._collidingObject.transform.position - this._hunterAI.transform.position;
+            this._collisionImpulse = this._collidingObject.transform.position - this._hunterController.transform.position;
             this._collisionImpulse.Normalize();
         }
 
         public override void Enter()
         {
             //Make sure the animator does not think Hunter is moving
-            this._hunterAI.HunterAnimator.SetFloat("MoveSpeed", 0.0f);
+            this._hunterController.HunterAnimator.SetFloat("MoveSpeed", 0.0f);
             //Trigger the animator
-            this._hunterAI.HunterAnimator.SetTrigger("StartKnockback");
+            this._hunterController.HunterAnimator.SetTrigger("StartKnockback");
             //Setting ip timer
-            this._knockbackTime = this._hunterAI.AsteroidKnockbackTime;
+            this._knockbackTime = this._hunterController.AsteroidKnockbackTime;
 
-            this._hunterAI.AsteroidCollisionEvent -= this._hunterAI.DefaultAsteroidCollision;
+            this._hunterController.AsteroidCollisionEvent -= this._hunterController.DefaultAsteroidCollision;
         }
 
         public override void OnStateUpdate()
@@ -40,21 +40,21 @@ namespace Assets.Scripts.Control
             }
             else
             {
-                this._hunterAI.HunterCharacterController.Move(this._hunterAI.AsteroidKnockbackStrenght * Time.deltaTime * -this._collisionImpulse * Mathf.Pow(this._knockbackTime / this._hunterAI.AsteroidKnockbackTime, 3));
-                this._hunterAI.HunterCharacterController.Move((this._hunterAI.AsteroidAirKnockbackStrenght * this._hunterAI.Gravity * Mathf.Pow(this._knockbackTime / this._hunterAI.AsteroidKnockbackTime, 3)) * Time.deltaTime * Vector3.up);
+                this._hunterController.HunterCharacterController.Move(this._hunterController.AsteroidKnockbackStrenght * Time.deltaTime * -this._collisionImpulse * Mathf.Pow(this._knockbackTime / this._hunterController.AsteroidKnockbackTime, 3));
+                this._hunterController.HunterCharacterController.Move((this._hunterController.AsteroidAirKnockbackStrenght * this._hunterController.Gravity * Mathf.Pow(this._knockbackTime / this._hunterController.AsteroidKnockbackTime, 3)) * Time.deltaTime * Vector3.up);
             }
         }
 
         public override void Exit()
         {
             //Trigger the animator
-            this._hunterAI.HunterAnimator.SetTrigger("EndKnockback");
-            this._hunterAI.AsteroidCollisionEvent += this._hunterAI.DefaultAsteroidCollision;
+            this._hunterController.HunterAnimator.SetTrigger("EndKnockback");
+            this._hunterController.AsteroidCollisionEvent += this._hunterController.DefaultAsteroidCollision;
         }
 
         public void KnockbackComplete()
         {
-            this._hunterAI.ChangeState(HunterCharacterStateMachine.HunterState.Idle);  
+            this._hunterController.ChangeState(HunterCharacterStateMachine.HunterState.Idle);  
         }
 
 

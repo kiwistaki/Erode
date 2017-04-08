@@ -9,22 +9,30 @@ public class HunterSpawner : MonoBehaviour {
 
     public float spawnTime = 8.0f;
     public GameObject hunter;
+    public GameObject spawner;
 
+    private Tile _tile;
+    private Vector3 _pos;
 
-
-	void Start ()
+    void Start()
     {
-        InvokeRepeating("Spawn", 0, spawnTime);
+        InvokeRepeating("SpawnSpawner", 0, spawnTime);
+        InvokeRepeating("SpawnHunter", 2, spawnTime);
     }
-	
-	void Update ()
-    { 
-	}
 
-    void Spawn()
+    void Update()
     {
-        Tile tile = Grid.inst.GetRandomTile(true, false);
-        Vector3 pos = tile.transform.position;
-        GameObject newHunter = Instantiate(hunter, pos, (Quaternion.Euler(0, 0, 0)));
+    }
+
+    void SpawnHunter()
+    {
+        Instantiate(hunter, this._pos, (Quaternion.Euler(0, 0, 0)));
+    }
+
+    void SpawnSpawner()
+    {
+        this._tile = Grid.inst.GetRandomTile(true, false);
+        this._pos = this._tile.transform.position;
+        Instantiate(spawner, new Vector3(this._pos.x, this._pos.y + 0.5f, this._pos.z), (Quaternion.Euler(0, 0, 0)));
     }
 }

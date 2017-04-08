@@ -64,16 +64,37 @@ namespace Assets.Obstacles.Asteroide
                 case "Hunter":
                     if (HitType==HammerController.HammerType.Undefined)
                     {
-                        collider.GetComponent<HunterAI>().OnAsteroidCollision(this.gameObject);
+                        collider.GetComponent<HunterController>().OnAsteroidCollision(this.gameObject);
                     }
                     else
                     {
-                        collider.GetComponent<HunterAI>().HitPoint -= 1;
+                        collider.GetComponent<HunterController>().HitPoint = 0;
+                    }
+                    break;
+                case "Charger":
+                    if (HitType == HammerController.HammerType.Undefined)
+                    {
+                        collider.GetComponent<ChargerController>().OnAsteroidCollision(this.gameObject);
+                    }
+                    else
+                    {
+                        collider.GetComponent<ChargerController>().HitPoint = 0;
                     }
                     break;
 
                 case "Hammer":
                     collider.GetComponent<HammerController>().OnAsteroidCollision(this.gameObject);
+                    break;
+
+                case "Shooter":
+                    if (HitType == HammerController.HammerType.Undefined)
+                    {
+                        collider.GetComponent<ShooterController>().OnAsteroidCollision(this.gameObject);
+                    }
+                    else
+                    {
+                        collider.GetComponent<ShooterController>().HitPoint = 0;
+                    }
                     break;
             }
         }
@@ -106,7 +127,7 @@ namespace Assets.Obstacles.Asteroide
         {
             switch (this.HitType)
             {
-                case HammerController.HammerType.Charged:
+                case HammerController.HammerType.ChargedLow:
                     Destroy(asteroid.gameObject);
                     break;
 

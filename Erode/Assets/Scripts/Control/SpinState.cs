@@ -57,7 +57,7 @@ namespace Assets.Scripts.Control
         {
             var decayMultiplier = Mathf.Max(0.0f, 1-this._time/this._playerController.SpinMoveSpeedDecay);
             this._playerController.ProcessMovementRotationFreeInput(this._playerController.SpinMoveSpeed * decayMultiplier, 0.0f);
-            this._playerController.transform.Rotate(this._playerController.transform.up,this._playerController.SpinRotateSpeed*360*Time.deltaTime);
+            this._playerController.transform.Rotate(this._playerController.transform.up,this._playerController.SpinRotateSpeed*360*Utils.Utils.getRealDeltaTime());
         }
 
         public override void Exit()

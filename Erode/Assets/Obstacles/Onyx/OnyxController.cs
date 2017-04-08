@@ -101,7 +101,11 @@ namespace Assets.Obstacles.Onyx
                     break;
 
                 case "Hunter":
-                    collider.GetComponent<HunterAI>().HitPoint = 0;
+                    collider.GetComponent<HunterController>().HitPoint = 0;
+                    break;
+                
+                case "Charger":
+                    collider.GetComponent<ChargerController>().OnCometCollision(this.gameObject);
                     break;
             }
         }

@@ -1,6 +1,10 @@
-﻿using Assets.Scripts.iTween;
+﻿using System;
+using Assets.Scripts.iTween;
 using MirzaBeig.ParticleSystems;
 using UnityEngine;
+using UnityEngine.UI;
+using System.Collections.Generic;
+using Assets.Scripts.Utils;
 
 namespace Assets.PowerUp.SuperSpeed
 {
@@ -10,33 +14,35 @@ namespace Assets.PowerUp.SuperSpeed
         public GameObject ExpirePrefab;
 
         private GameObject _trail;
+        private bool _timersLock = false;
+        private PowerUpController _powerUpController;
 
-        void Awake()
+        new void Awake()
         {
             base.Awake();
             iTween.MoveBy(this.gameObject, iTween.Hash
-                ( "amount", this.transform.up*0.3f
+                ("amount", this.transform.up * 0.3f
                 , "time", 1.0f
                 , "looptype", iTween.LoopType.pingPong
                 , "easetype", iTween.EaseType.easeInOutBack
                 ));
+            _powerUpController = Camera.main.GetComponent<PowerUpController>();
         }
 
         protected override void ActivatePowerUp()
         {
-            this._playerController.SpeedModifier += 0.5f;
             this._trail = Instantiate(this.TrailPrefab, this._playerController.transform);
             this._trail.transform.localPosition = this.TrailPrefab.transform.localPosition;
+            _powerUpController.ActivatePowerUpEffect(PowerUpType.SuperSpeed, this.Duration);
         }
 
         protected override void UpdatePowerUp()
         {
-            
         }
 
         protected override void DeactivatePowerUp()
         {
-            this._playerController.SpeedModifier -= 0.5f;
+            _powerUpController.DeactivatePowerUpEffect(PowerUpType.SuperSpeed);
             Destroy(this._trail);
         }
 

@@ -15,6 +15,6 @@ public class SolarwindSpawner : MonoBehaviour {
     void Spawn()
     {
         // Instantiation of new gameobject
-        GameObject newSolarwind = Instantiate(Solarwind, new Vector3(0, 0, 0), (Quaternion.Euler(0, 0, 0)));
+        Instantiate(Solarwind, new Vector3(0, 0, 0), (Quaternion.Euler(0, 0, 0)));
     }
 }

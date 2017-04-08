@@ -52,7 +52,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f95eff96030e3d469744f7d5612ed00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BlackholeVFX: {fileID: 1545469469573538, guid: d24909ce0e308e64698548f8864d02bd,
+  BlackholeVFX: {fileID: 180324, guid: 01ad37a255192ce41bc30a2ad6fa1be7, type: 2}
+  BlackholeGraviton: {fileID: 1206507549570782, guid: de0eec4c686eefe49bb451a4e981528a,
     type: 2}
   MoveSpeed: 50
   _LifeExpectancy: 5

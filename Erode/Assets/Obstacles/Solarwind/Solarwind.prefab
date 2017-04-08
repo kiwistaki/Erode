@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8b2e1af51e70d041932c46c170bacfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SolarwindVFX: {fileID: 0}
+  SolarwindVFX: {fileID: 109150, guid: a00dd8114be63c14fae7057ec7f5aa62, type: 2}
   MoveSpeed: 2
   _LifeExpectancy: 5
   GetTargetTime: 1

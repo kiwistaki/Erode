@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Assets.Scripts.HexGridGenerator;
+﻿using Assets.Scripts.HexGridGenerator;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using Assets.PowerUp;
 
 namespace Assets.PowerUp
 {
@@ -13,16 +10,9 @@ namespace Assets.PowerUp
         public GameObject SuperSpeedPrefab = null;
         public GameObject ScoreMultiplierPrefab = null;
         public GameObject SlowMotionPrefab = null;
+        public GameObject AmmoPrefab = null;
 
         public float SpawnInterval = 5.0f;
-
-        public enum PowerUpType
-        {
-            SuperSpeed,
-            ScoreMultiplier,
-            SlowMotion,
-            PowerUpCount
-        }
 
         private float _timer = 0.0f;
 
@@ -41,18 +31,20 @@ namespace Assets.PowerUp
             if (tile != null)
             {
                 var position = tile.transform.position + tile.transform.up;
-                var type = (PowerUpType)Random.Range(0.0f, (float)PowerUpType.PowerUpCount - 0.1f);
-                GameObject powerUp;
+                var type = (AbstractPowerUp.PowerUpType)Random.Range(0.0f, (float)AbstractPowerUp.PowerUpType.PowerUpCount - 0.1f);
                 switch (type)
                 {
-                    case PowerUpType.SuperSpeed:
-                        powerUp = Instantiate(this.SuperSpeedPrefab, position, Quaternion.identity);
+                    case AbstractPowerUp.PowerUpType.SuperSpeed:
+                        Instantiate(this.SuperSpeedPrefab, position, Quaternion.identity);
                         break;
-                    case PowerUpType.ScoreMultiplier:
-                        powerUp = Instantiate(this.ScoreMultiplierPrefab, position, Quaternion.identity);
+                    case AbstractPowerUp.PowerUpType.ScoreMultiplier:
+                        Instantiate(this.ScoreMultiplierPrefab, position, Quaternion.identity);
                         break;
-                    case PowerUpType.SlowMotion:
-                        powerUp = Instantiate(this.SlowMotionPrefab, position, Quaternion.identity);
+                    case AbstractPowerUp.PowerUpType.SlowMotion:
+                        Instantiate(this.SlowMotionPrefab, position, Quaternion.identity);
+                        break;
+                    case AbstractPowerUp.PowerUpType.Ammo:
+                        Instantiate(this.AmmoPrefab, position, Quaternion.identity);
                         break;
                     default:
                         throw new UnityException("PowerUpSpawner::SpawnPowerUp: " + type.ToString() + " IS NOT IMPLEMENTED");

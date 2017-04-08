@@ -2,8 +2,8 @@
 {
     public class HammerChargedStrikeState : PlayerState
     {
-        public HammerChargedStrikeState(PlayerController player)
-            : base(player, null)
+        public HammerChargedStrikeState(PlayerController player, object args)
+            : base(player, args)
         {
 
         }
@@ -18,7 +18,7 @@
             this._playerController.AsteroidCollisionEvent -= this._playerController.DefaultCollision;
             //Show hammer
             this._playerController.EquipWeapons(PlayerController.EquippedWeapons.Hammer);
-            this._playerController.SetHammerType(HammerController.HammerType.Charged);
+            this._playerController.SetHammerType((HammerController.HammerType)this._args);
         }
 
         public override void OnStateUpdate()
@@ -29,6 +29,8 @@
         {
             this._playerController.StrikeAnimCompleteEvent -= this.StrikeAnimCompleteEvent;
             this._playerController.AsteroidCollisionEvent += this._playerController.DefaultCollision;
+
+            this._playerController.CleanHammerChargeVfx();
         }
 
         private void StrikeAnimCompleteEvent()

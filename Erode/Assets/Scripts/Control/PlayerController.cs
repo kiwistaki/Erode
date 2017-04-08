@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using MirzaBeig.ParticleSystems;
+using UnityEngine;
 
 namespace Assets.Scripts.Control
 {
@@ -8,8 +10,11 @@ namespace Assets.Scripts.Control
         public GameObject RepairRoot;
         public GameObject RepairVFX;
         public GameObject HitVfxPrefab;
+        public GameObject[] HammerChargingVfx = new GameObject[3];
+        public GameObject HammerChargingBurstVfx;
         public HammerController HammerController = null;
         public RepairToolController RepairToolController = null;
+        public RepairBoxController RepairBoxController = null;
         [Range(0.0f, 10.0f)]
         public float MovementSpeed = 5.0f;
         [Range(0.0f, 100.0f)]
@@ -49,6 +54,24 @@ namespace Assets.Scripts.Control
         [Range(10f, 30f)]
         public float RepairDistance = 20f;
         public LayerMask RepairLayerMask;
+        [Range(0f, 10f)]
+        public float EMPInjuredTime = 5f;
+        [Range(0.0f, 10.0f)]
+        public float EMPInjuredSpeed = 3f;
+        public int MaxAmmo = 50;
+        [Range(0.1f, 5.0f)]
+        public float ChargeTimeIncrement = 1.5f;
+
+        public bool BoxRepair = true;
+        public float BoxRepairTimer = 0.15f;
+        [Range(0.0f, 1.0f)]
+        public float AmmoRegen = 0.05f;
+
+        public bool RunningRepair = false;
+        [Range(0.0f, 1.0f)]
+        public float RunningRepairMoveSpeed = 0.75f;
+        [Range(0.0f, 1.0f)]
+        public float RunningRepairTurnSpeed = 0.75f;
 
         #region Enumeration
         public enum EquippedWeapons
@@ -100,6 +123,35 @@ namespace Assets.Scripts.Control
                 this.HunterCollisionEvent(hunter);
             }
         }
+        public delegate void ChargerCollisionEventHandler(GameObject charger);
+        public event ChargerCollisionEventHandler ChargerCollisionEvent;
+        public void OnChargerCollisionEvent(GameObject charger)
+        {
+            if (this.ChargerCollisionEvent != null)
+            {
+                this.ChargerCollisionEvent(charger);
+            }
+        }
+
+        public delegate void ShooterCollisionEventHandler(GameObject shooter);
+        public event ShooterCollisionEventHandler ShooterCollisionEvent;
+        public void OnShooterCollisionEvent(GameObject shooter)
+        {
+            if (this.ShooterCollisionEvent != null)
+            {
+                this.ShooterCollisionEvent(shooter);
+            }
+        }
+
+        public delegate void ShooterAttackEventHandler(float stunnedTime);
+        public event ShooterAttackEventHandler ShooterAttackEvent;
+        public void OnShooterAttackEvent(float stunnedTime)
+        {
+            if(this.ShooterAttackEvent != null)
+            {
+                this.ShooterAttackEvent(stunnedTime);
+            }
+        }
 
         public delegate void AsteroidCollisionEventHandler(GameObject arg);
         public event AsteroidCollisionEventHandler AsteroidCollisionEvent;
@@ -120,9 +172,21 @@ namespace Assets.Scripts.Control
                 this.CometCollisionEvent(arg);
             }
         }
+
+        public delegate void EMPEventHandler();
+        public event EMPEventHandler EMPEvent;
+        public void OnEMPExplosion()
+        {
+            if (this.EMPEvent != null)
+            {
+                this.EMPEvent();
+            }
+        }
         #endregion
 
         public float SpeedModifier { get; set; }
+
+        public int AmmoCount { get; set; } 
 
         private CharacterController _playerCharacterController = null;
         public CharacterController PlayerCharacterController
@@ -137,14 +201,21 @@ namespace Assets.Scripts.Control
         }
 
         private PlayerCharacterStateMachine _playerCharacterStateMachine = null;
+        private List<GameObject> _hammerVfx = new List<GameObject>();
+        private bool _isInjured = false;
+        private float _ammoRegenTimer = 0.0f;
 
         void Awake()
         {
             this.SpeedModifier = 1.0f;
+            this.AmmoCount = this.MaxAmmo;
 
             //Subscribe to collisions
             this.AsteroidCollisionEvent += this.DefaultCollision;
             this.CometCollisionEvent += this.DefaultCollision;
+            this.EMPEvent += this.InjuredPlayer;
+            this.ShooterAttackEvent += this.HitByShooterAttack;
+            this.ChargerCollisionEvent += this.HitByCharger;
         }
 
         void Start()
@@ -154,8 +225,8 @@ namespace Assets.Scripts.Control
             this._playerAnimator = this.GetComponent<Animator>();
 
             this.PlayerAnimator.SetFloat("MoveSpeed", 0.0f);
-            this.PlayerAnimator.SetFloat("ForwardVelocity", 0.0f);
-            this.PlayerAnimator.SetFloat("RightVelocity", 0.0f);
+            //this.PlayerAnimator.SetFloat("ForwardVelocity", 0.0f);
+            //this.PlayerAnimator.SetFloat("RightVelocity", 0.0f);
         }
 
         //Update is called once per frame
@@ -163,6 +234,13 @@ namespace Assets.Scripts.Control
         {
             //Gravity is important!
             this.ApplyGravity();
+            
+            //Ammo regen over time
+            if ((this._ammoRegenTimer += Utils.Utils.getRealDeltaTime()) >= this.AmmoRegen)
+            {
+                this._ammoRegenTimer -= this.AmmoRegen;
+                this.AmmoCount += 1;
+            }
 
             this._playerCharacterStateMachine.UpdateStateMachine();
         }
@@ -285,7 +363,19 @@ namespace Assets.Scripts.Control
             this.ChangeState(PlayerCharacterStateMachine.PlayerStates.Knockbacked, asteroid);
         }
 
+        public void HitByCharger(GameObject charger) 
+        {
+                this.PlayHitEffect(this.transform.position + (charger.transform.position - this.transform.position) * 0.5f);
+                this.ChangeState(PlayerCharacterStateMachine.PlayerStates.Knockbacked, charger);            
+        }
+
         public void HitByHunterAttack(float stunnedTime)
+        {
+            this.PlayHitEffect(this.transform.position + 2 * this.transform.up);
+            this.ChangeState(PlayerCharacterStateMachine.PlayerStates.Stunned, stunnedTime);
+        }
+
+        public void HitByShooterAttack(float stunnedTime)
         {
             this.PlayHitEffect(this.transform.position + 2 * this.transform.up);
             this.ChangeState(PlayerCharacterStateMachine.PlayerStates.Stunned, stunnedTime);
@@ -293,12 +383,18 @@ namespace Assets.Scripts.Control
 
         public void ChangeState(PlayerCharacterStateMachine.PlayerStates state, object args)
         {
-            this._playerCharacterStateMachine.ChangeState(state, args);
+            if (this._isInjured && state == PlayerCharacterStateMachine.PlayerStates.IdleRun)
+            {
+                this._playerCharacterStateMachine.ChangeState(PlayerCharacterStateMachine.PlayerStates.Injured, EMPInjuredTime);
+                _isInjured = false;
+            }
+            else
+                this._playerCharacterStateMachine.ChangeState(state, args);
         }
 
         public void ChangeState(PlayerCharacterStateMachine.PlayerStates state)
         {
-            this._playerCharacterStateMachine.ChangeState(state, null);
+            this.ChangeState(state, null);
         }
 
         public void RotatePlayer(float rotationMultiplier, Vector3 input)
@@ -320,6 +416,38 @@ namespace Assets.Scripts.Control
         public void PlayHitEffect(Vector3 pos)
         {
             Instantiate(this.HitVfxPrefab, pos, this.transform.rotation);
+        }
+
+        public void PlayChargingVfx(int i)
+        {
+            this._hammerVfx.Add(Instantiate(this.HammerChargingVfx[i], this.HammerController.transform.position, this.HammerController.transform.rotation, this.HammerController.transform));
+        }
+
+        public void PlayChargingBurstVfx()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                var burst = Instantiate(this.HammerChargingBurstVfx, this.HammerController.transform.position, this.HammerController.transform.rotation, this.HammerController.transform);
+                burst.GetComponent<ParticleSystems>().setPlaybackSpeed(8.0f);
+            }
+        }
+
+        public void CleanHammerChargeVfx()
+        {
+            foreach (var vfx in this._hammerVfx)
+            {
+                Destroy(vfx);
+            }
+            this._hammerVfx.Clear();
+        }
+        public void InjuredPlayer()
+        {
+            this._playerCharacterStateMachine.ChangeState(PlayerCharacterStateMachine.PlayerStates.Injured, EMPInjuredTime);
+        }
+
+        public void InjuredPlayerDelayed()
+        {
+            this._isInjured = true;
         }
     }
 }

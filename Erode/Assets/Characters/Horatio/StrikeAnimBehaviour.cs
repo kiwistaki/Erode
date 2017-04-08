@@ -15,7 +15,6 @@ namespace Assets.Characters.Horatio
         // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
         public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-
             if (this._firstTransition)
             {
                 if (!animator.IsInTransition(layerIndex))

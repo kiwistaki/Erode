@@ -105,8 +105,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Lifetime: 5
-  Duration: 10
+  Duration: 8
   TrailPrefab: {fileID: 1468911478690888, guid: 6d54a5fa3ee5657449170a87164627ef,
     type: 2}
   ExpirePrefab: {fileID: 178966, guid: d132ea92e4a50814ab98dbdfbf4678fd, type: 2}
-  VfxPrefab: {fileID: 131706, guid: 999feb3927fa227489b753b908cd30ee, type: 2}

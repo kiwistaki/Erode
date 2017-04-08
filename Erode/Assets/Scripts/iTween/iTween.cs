@@ -4359,6 +4359,8 @@ namespace Assets.Scripts.iTween
         }	
 	
         void ApplyShakePositionTargets(){
+            if (!useRealTime && Time.timeScale == 0f)
+                return;
             //preUpdate = transform.position;
             if (this.isLocal) {
                 this.preUpdate = this.thisTransform.localPosition;
@@ -6194,13 +6196,15 @@ namespace Assets.Scripts.iTween
         /// </summary>
         public static void Pause(GameObject target){
             Component[] tweens = target.GetComponents<iTween>();
-            foreach (iTween item in tweens){
-                if(item.delay>0){
-                    item.delay-=Time.time-item.delayStarted;
+            foreach (iTween item in tweens)
+            {
+                if (item.delay > 0)
+                {
+                    item.delay -= Time.time - item.delayStarted;
                     item.StopCoroutine("TweenDelay");
                 }
-                item.isPaused=true;
-                item.enabled=false;
+                item.isPaused = true;
+                item.enabled = false;
             }
         }
 	

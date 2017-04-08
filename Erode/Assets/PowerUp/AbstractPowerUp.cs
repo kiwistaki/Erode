@@ -3,14 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Assets.Scripts.Control;
+using Assets.Scripts.Utils;
 using UnityEngine;
 
 namespace Assets.PowerUp
 {
     public abstract class AbstractPowerUp : MonoBehaviour
     {
-        public float Lifetime = 10.0f;
-        public float Duration = 10.0f;
+        public enum PowerUpType
+        {
+            SuperSpeed,
+            ScoreMultiplier,
+            SlowMotion,
+            Ammo,
+            PowerUpCount
+        }
+
+        public float Lifetime = 5.0f;
+        public float Duration = 5.0f;
 
         private float _lifetime = 0.0f;
         protected PlayerController _playerController = null;
@@ -22,7 +32,7 @@ namespace Assets.PowerUp
 
         void Update()
         {
-            if ((this._lifetime -= Time.deltaTime/(Time.timeScale == 0 ? 1 : Time.timeScale)) <= 0)
+            if ((this._lifetime -= Utils.getRealDeltaTime()) <= 0)
             {
                 //Player controller is null only if player picked up the bonus
                 if (this._playerController != null)
@@ -31,10 +41,7 @@ namespace Assets.PowerUp
                 }
                 this.Expire();
             }
-            if (this._playerController)
-            {
-                this.UpdatePowerUp();
-            }
+            this.UpdatePowerUp();
         }
 
         void OnTriggerEnter(Collider collider)

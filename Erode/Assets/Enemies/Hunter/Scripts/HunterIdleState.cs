@@ -8,7 +8,7 @@ namespace Assets.Scripts.Control
     public class HunterIdleState : HunterState
     {
 
-        public HunterIdleState(HunterAI hunter) : base(hunter, null)
+        public HunterIdleState(HunterController hunter) : base(hunter, null)
         {
         }
 
@@ -19,9 +19,9 @@ namespace Assets.Scripts.Control
 
         public override void OnStateUpdate()
         {
-            if (this._hunterAI.WillFollow())
+            if (this._hunterController.WillFollow())
             {
-                this._hunterAI.ChangeState(HunterCharacterStateMachine.HunterState.Follow);
+                this._hunterController.ChangeState(HunterCharacterStateMachine.HunterState.Follow);
             }
         }
 

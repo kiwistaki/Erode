@@ -7,16 +7,16 @@ namespace Assets.Scripts.Control
 {
     public class HunterDieState : HunterState
     {
-        public HunterDieState(HunterAI hunter) : base(hunter, null)
+        public HunterDieState(HunterController hunter) : base(hunter, null)
         {
         }
 
         public override void Enter()
         {
-            this._hunterAI.AsteroidCollisionEvent -= this._hunterAI.DefaultAsteroidCollision;
-            this._hunterAI.HunterAnimator.SetTrigger("HunterDie");
-            this._hunterAI.GetComponent<CapsuleCollider>().enabled = false;
-            this._hunterAI.GetComponent<CharacterController>().enabled = false;
+            this._hunterController.AsteroidCollisionEvent -= this._hunterController.DefaultAsteroidCollision;
+            this._hunterController.HunterAnimator.SetTrigger("HunterDie");
+            this._hunterController.GetComponent<CapsuleCollider>().enabled = false;
+            this._hunterController.GetComponent<CharacterController>().enabled = false;
         }
 
         public override void Exit()
@@ -25,6 +25,7 @@ namespace Assets.Scripts.Control
 
         public override void OnStateUpdate()
         {
+
         }
 
 

@@ -8,14 +8,14 @@ namespace Assets.Scripts.Control
 {
     public class HunterAttackState : HunterState
     {
-        public HunterAttackState(HunterAI hunter, object args) : base(hunter, args)
+        public HunterAttackState(HunterController hunter, object args) : base(hunter, args)
         {
         }
 
         public override void Enter()
         {
-            this._hunterAI.HunterAnimator.SetTrigger("HunterAttack");
-            this._hunterAI.AttackAnimCompleteEvent += this.AttackAnimComplete;
+            this._hunterController.HunterAnimator.SetTrigger("HunterAttack");
+            this._hunterController.AttackAnimCompleteEvent += this.AttackAnimComplete;
         }
 
         public override void OnStateUpdate()
@@ -24,12 +24,12 @@ namespace Assets.Scripts.Control
 
         public override void Exit()
         {
-            this._hunterAI.AttackAnimCompleteEvent -= this.AttackAnimComplete;
+            this._hunterController.AttackAnimCompleteEvent -= this.AttackAnimComplete;
         }
 
         public void AttackAnimComplete()
         {
-            this._hunterAI.ChangeState(HunterCharacterStateMachine.HunterState.Idle);
+            this._hunterController.ChangeState(HunterCharacterStateMachine.HunterState.Idle);
         }
 
         public override HunterCharacterStateMachine.HunterState GetStateType()

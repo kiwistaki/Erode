@@ -40,6 +40,9 @@ namespace Assets.Scripts.Control
             //Disable further knockback
             this._playerController.AsteroidCollisionEvent -= this._playerController.DefaultCollision;
             this._playerController.CometCollisionEvent -= this._playerController.DefaultCollision;
+            this._playerController.EMPEvent -= this._playerController.InjuredPlayer;
+            this._playerController.EMPEvent += this._playerController.InjuredPlayerDelayed;
+            this._playerController.ShooterAttackEvent -= this._playerController.HitByShooterAttack;
         }
 
         public override void OnStateUpdate()
@@ -63,6 +66,9 @@ namespace Assets.Scripts.Control
             //Re-enable knockback
             this._playerController.AsteroidCollisionEvent += this._playerController.DefaultCollision;
             this._playerController.CometCollisionEvent += this._playerController.DefaultCollision;
+            this._playerController.EMPEvent -= this._playerController.InjuredPlayerDelayed;
+            this._playerController.EMPEvent += this._playerController.InjuredPlayer;
+            this._playerController.ShooterAttackEvent += this._playerController.HitByShooterAttack;
         }
 
         private void KnockbackComplete()

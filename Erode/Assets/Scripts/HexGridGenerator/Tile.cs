@@ -19,7 +19,7 @@ namespace Assets.Scripts.HexGridGenerator
             set
             {
                 this._missingNeighbours = value;
-                if (this._missingNeighbours >= 2 && this._hp > 0)
+                if (this._missingNeighbours >= 2 && this.Hp > 0)
                 {
                     if (!Grid.inst.BorderHexes.ContainsKey(this.Index.GetHashCode()))
                     {
@@ -45,14 +45,23 @@ namespace Assets.Scripts.HexGridGenerator
             }
         }
 
-        //PUBLIC ONLY FOR DEBUG
-        public int _maxHp;
+        private int _maxHp;
+        public int MaxHp
+        {
+            get;
+            private set;
+        }
+
         public int _hp = -1;
         public int Hp
         {
             get { return this._hp; }
-            set
+            private set
             {
+                //Do not do anything if new hp is the same as before
+                if (value == this._hp)
+                    return;
+
                 var preHp = this._hp;
                 this._hp = Mathf.Clamp(value, 0, this._maxHp);
                 if (this._hp == 0 && preHp > 0)
@@ -81,8 +90,44 @@ namespace Assets.Scripts.HexGridGenerator
                 }
             }
         }
-        public bool _isShaking = false;
 
+        public bool IsTileWaving
+        {
+            get { return _isWaving; }
+            set
+            {
+                if (_isWaving == false && value == true)
+                {
+                    RaycastHit hitInfo;
+                    if (Physics.Raycast(new Ray(this.transform.position + new Vector3(0, .5f, 0), Vector3.up), out hitInfo, 20))
+                    {
+                        switch (hitInfo.collider.tag)
+                        {
+                            case "Hunter":
+                                hitInfo.collider.gameObject.GetComponent<HunterController>().HitPoint -= 1;
+                                Instantiate(Grid.inst.TileHitVfxPrefab, hitInfo.collider.transform.position, hitInfo.collider.transform.rotation);
+                                break;
+                            case "Shooter":
+                                hitInfo.collider.gameObject.GetComponent<ShooterController>().HitPoint -= 1;
+                                Instantiate(Grid.inst.TileHitVfxPrefab, hitInfo.collider.transform.position, hitInfo.collider.transform.rotation);
+                                break;
+                            case "Charger":
+                                hitInfo.collider.gameObject.GetComponent<ChargerController>().HitPoint -= 1;
+                                Instantiate(Grid.inst.TileHitVfxPrefab, hitInfo.collider.transform.position, hitInfo.collider.transform.rotation);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+                _isWaving = value;
+            }
+        }
+
+        private bool _isShaking = false;
+        private bool _isWaving = false;
+        private bool _repairing = false;
+        private float _waveAnimationTimer = 0.0f;
         private int _hash = 0;
 
         public void Initialize()
@@ -108,9 +153,54 @@ namespace Assets.Scripts.HexGridGenerator
             this.Hp -= damage;
         }
 
-        public void Repair()
+        //Annihilation
+        public void ErodeKill()
         {
-            this.RandomizeHp();
+            this.Hp = 0;
+        }
+
+        public void RepairFromGun(Vector3 startPos)
+        {
+            if (this.Hp > 0)
+            {
+                this.Hp = this._maxHp;
+            }
+            else
+            {
+                if (this._repairing)
+                {
+                    return;
+                }
+                else
+                {
+                    iTween.iTween.StopByName(this.gameObject, "Fall");
+
+                    this._repairing = true;
+                    this.GetComponent<MeshRenderer>().enabled = true;
+                    this.transform.localScale = Vector3.zero;
+                    this.transform.position = startPos;
+                    iTween.iTween.MoveTo(this.gameObject, iTween.iTween.Hash
+                        ("name", "Repair"
+                            , "position", Vector3.zero
+                            , "time", 0.25f
+                            , "looptype", iTween.iTween.LoopType.none
+                            , "easetype", iTween.iTween.EaseType.easeOutSine
+                            , "islocal", true
+                            , "oncomplete", "RepairFromGunComplete"
+                            , "ignoretimescale", true
+                        ));
+
+                    iTween.iTween.ScaleTo(this.gameObject, iTween.iTween.Hash
+                        ("name", "Repair"
+                            , "scale", Vector3.one
+                            , "time", 0.25f
+                            , "looptype", iTween.iTween.LoopType.none
+                            , "easetype", iTween.iTween.EaseType.easeOutSine
+                            , "ignoretimescale", true
+                        ));
+                }
+                this.GetComponent<MeshCollider>().enabled = false;
+            }
         }
 
         //This hex lost one of its neighbours
@@ -125,6 +215,13 @@ namespace Assets.Scripts.HexGridGenerator
             this.MissingNeighbours -= 1;
         }
 
+        private void RepairFromGunComplete()
+        {
+            this._repairing = false;
+            this.GetComponent<MeshCollider>().enabled = true;
+            this.RandomizeHp();
+        }
+
         private void RandomizeHp()
         {
             //Random range of hp
@@ -135,13 +232,20 @@ namespace Assets.Scripts.HexGridGenerator
 
         private void Shake()
         {
-            iTween.iTween.ShakePosition(this.gameObject, iTween.iTween.Hash(
-                "name", "Shake",
-                "amount", new Vector3(Grid.inst.ShakeStrenght, Grid.inst.ShakeStrenght, Grid.inst.ShakeStrenght),
-                "time", 30.0f,
-                "looptype", iTween.iTween.LoopType.loop
-                ));
-            this._isShaking = true;
+            if (!this._isShaking)
+            {
+                iTween.iTween.ShakePosition(this.gameObject, iTween.iTween.Hash(
+                    "name", "Shake",
+                    "amount", new Vector3(Grid.inst.ShakeStrenght, Grid.inst.ShakeStrenght, Grid.inst.ShakeStrenght),
+                    "time", 30.0f,
+                    "looptype", iTween.iTween.LoopType.loop,
+                    "onstarttarget", this.gameObject,
+                    "onstart", "ResetTransform",
+                    "ignoretimescale", false
+                    ));
+
+                this._isShaking = true;
+            }
         }
 
         private void ShakeStop()
@@ -163,12 +267,13 @@ namespace Assets.Scripts.HexGridGenerator
         {
             this.ShakeStop();
             iTween.iTween.MoveBy(this.gameObject, iTween.iTween.Hash
-                ( "name", "Fall"
-                    , "amount", -20*this.transform.up
+                ("name", "Fall"
+                    , "amount", -20 * this.transform.up
                     , "time", 2.0f
                     , "looptype", iTween.iTween.LoopType.none
                     , "easetype", iTween.iTween.EaseType.easeInQuart
                     , "oncomplete", "Hide"
+                    , "ignoretimescale", false
                 ));
             iTween.iTween.ScaleTo(this.gameObject, iTween.iTween.Hash
                 ("name", "Fall"
@@ -176,14 +281,15 @@ namespace Assets.Scripts.HexGridGenerator
                     , "time", 2.0f
                     , "looptype", iTween.iTween.LoopType.none
                     , "easetype", iTween.iTween.EaseType.easeInExpo
+                    , "ignoretimescale", false
                 ));
-            this.GetComponent<MeshCollider>().enabled = false;
+            //this.GetComponent<MeshCollider>().enabled = false;
         }
 
         public void Hide()
         {
             this.GetComponent<MeshRenderer>().enabled = false;
-            this.GetComponent<MeshCollider>().enabled = false;
+            //this.GetComponent<MeshCollider>().enabled = false;
         }
 
         private void Show()
@@ -199,6 +305,19 @@ namespace Assets.Scripts.HexGridGenerator
             this.transform.localPosition = Vector3.zero;
             this.transform.localRotation = Quaternion.identity;
             this.transform.localScale = Vector3.one;
+            this._waveAnimationTimer = 0.0f;
+            this.IsTileWaving = false;
+        }
+
+        private void UpdateYAxis()
+        {
+            this.transform.localPosition = new Vector3(0.0f, 1.5f * Mathf.Sin(2*Mathf.PI * _waveAnimationTimer) / (_waveAnimationTimer + (Mathf.PI / 4)), 0.0f);
+            _waveAnimationTimer += Time.deltaTime;
+        }
+
+        private void ToWavingState()
+        {
+            this.IsTileWaving = true;
         }
 
         #region Coordinate Conversion Functions

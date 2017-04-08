@@ -42,6 +42,6 @@ public class BlackholeSpawner : MonoBehaviour
             pos.z -= 1;
 
         // Instiation of new gameobject
-        GameObject newBlackhole = Instantiate(blackhole, pos, (Quaternion.Euler(0, 0, 0)));
+        Instantiate(blackhole, pos, (Quaternion.Euler(0, 0, 0)));
     }  
 }

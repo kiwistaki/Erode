@@ -1,0 +1,237 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1595862936140076}
+  m_IsPrefabParent: 1
+--- !u!1 &1595862936140076
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4441575480654894}
+  - component: {fileID: 114018414827104140}
+  - component: {fileID: 114475080713509680}
+  - component: {fileID: 114292312790609618}
+  - component: {fileID: 114389141592274462}
+  - component: {fileID: 114344483947238346}
+  - component: {fileID: 114626840933175114}
+  - component: {fileID: 114765629688440960}
+  - component: {fileID: 114788436082335540}
+  - component: {fileID: 114501194318175624}
+  - component: {fileID: 114688607016236490}
+  - component: {fileID: 114929447995259952}
+  - component: {fileID: 114648682700819944}
+  m_Layer: 0
+  m_Name: Spawners
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4441575480654894
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1595862936140076}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114018414827104140
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1595862936140076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 519c37a1e7831d141b2275f33d42fd0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpawnTime: 2
+  Asteroide:
+  - {fileID: 173668, guid: 965a95650c5ae2a48b35aa03ca4a0a31, type: 2}
+  - {fileID: 190680, guid: 72776d15a565f3f499c3d02414de971e, type: 2}
+  - {fileID: 180238, guid: c49caf18677eba3478784cd2f08b98b8, type: 2}
+  - {fileID: 103884, guid: ece113bb09a725547ad15c6e1794fbe0, type: 2}
+  Radius: 35
+  AngleVariation: 35
+  AsteroidHeight: 1.5
+  AsteroidSpeed: 4
+  AsteroidAngularSpeed: 15
+--- !u!114 &114292312790609618
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1595862936140076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbb2cb1652d105545b78750457c35ca0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Charger: {fileID: 1114738109566520, guid: 2357bdd96b6ce844fa79e39acd2bdbbc, type: 2}
+  Spawner: {fileID: 1853152712187018, guid: ddee5c27f94760d4a97efaef0066a2d1, type: 2}
+--- !u!114 &114344483947238346
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1595862936140076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6af94466eb678e34692a6accc3746f74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EMPPulse: {fileID: 1063745351190036, guid: ff01c23b88856624791a485fd34bcd7b, type: 2}
+  PlayerController: {fileID: 0}
+  LayerMask:
+    serializedVersion: 2
+    m_Bits: 55
+  SpawnDistanceFromPlayer: 10
+--- !u!114 &114389141592274462
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1595862936140076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5ea898aaa366b440894c875c2fd8435, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RedXComet: {fileID: 1762140313324216, guid: f75a1de35cdc34c44971129dcea3fd58, type: 2}
+  Comet:
+  - {fileID: 173668, guid: ae4427e80dceffe47b5179ce000667cb, type: 2}
+  - {fileID: 190680, guid: ead4c151b2850004782f62d3ac573cbe, type: 2}
+  - {fileID: 180238, guid: eeb1c2ea47bc7f04cb234f63e9bbf4dc, type: 2}
+  - {fileID: 103884, guid: 7f7566e20b9ffe54798c1bf42201e1a9, type: 2}
+  CometSpeed: 8
+  SpawnRadius: 15
+--- !u!114 &114475080713509680
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1595862936140076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d26ad3e014b65e94d818b11cf3e46df7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Blackhole: {fileID: 1576368168730732, guid: 64c22e82ee811dc41b69546f2262b4af, type: 2}
+--- !u!114 &114501194318175624
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1595862936140076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 828b1cbfaffd442499dd8510d04cf2ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Shooter: {fileID: 1990809896212070, guid: e5836d050fdb354479bcd0d285bf2f22, type: 2}
+  Spawner: {fileID: 1853152712187018, guid: ddee5c27f94760d4a97efaef0066a2d1, type: 2}
+--- !u!114 &114626840933175114
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1595862936140076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93e55b2263b804040b81a50f32a00b99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hunter: {fileID: 1262102485998528, guid: 8af2fabc60ea3a94d9630e8aae4e2aed, type: 2}
+  spawner: {fileID: 1853152712187018, guid: ddee5c27f94760d4a97efaef0066a2d1, type: 2}
+--- !u!114 &114648682700819944
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1595862936140076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93e55b2263b804040b81a50f32a00b99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hunter: {fileID: 1262102485998528, guid: 8af2fabc60ea3a94d9630e8aae4e2aed, type: 2}
+  spawner: {fileID: 1853152712187018, guid: ddee5c27f94760d4a97efaef0066a2d1, type: 2}
+--- !u!114 &114688607016236490
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1595862936140076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3e37c5fe27adfa49aded4ebdc936ebf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Solarwind: {fileID: 1919346979507316, guid: 1c2d55a9cc3220c44be9f6ac60e1e0a1, type: 2}
+--- !u!114 &114765629688440960
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1595862936140076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b248989b9c6ef7c4199a4a04cdc46331, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnyxPrefab: {fileID: 1615887479376752, guid: 215cf5101bdb8e14cb60119b9e66ddb5, type: 2}
+  OnyxTrailPrefab: {fileID: 1091640777313482, guid: b4fcaf91daddc8a468680a086ef21ab1,
+    type: 2}
+  Height: 0
+  Radius: 35
+  AngleVariation: 35
+  OnyxAmplitude: 7
+  OnyxSpeed: 1
+  OnyxPeriod: 10
+  OnyxBalls: 15
+--- !u!114 &114788436082335540
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1595862936140076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95691886161a24e46a530eabbbfe95a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SuperSpeedPrefab: {fileID: 1800584621976394, guid: 71732576a9306184ea7f54e9ffce7027,
+    type: 2}
+  ScoreMultiplierPrefab: {fileID: 1006588088113640, guid: 259df1107d80a7e4cb8c8566c5b33808,
+    type: 2}
+  SlowMotionPrefab: {fileID: 186332, guid: 56bea99d2e219664e85ae9a044ac04f0, type: 2}
+--- !u!114 &114929447995259952
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1595862936140076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93e55b2263b804040b81a50f32a00b99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hunter: {fileID: 1262102485998528, guid: 8af2fabc60ea3a94d9630e8aae4e2aed, type: 2}
+  spawner: {fileID: 1853152712187018, guid: ddee5c27f94760d4a97efaef0066a2d1, type: 2}

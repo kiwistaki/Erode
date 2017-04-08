@@ -18,6 +18,7 @@ namespace Assets.Scripts.Control
             this._playerController.EquipWeapons(PlayerController.EquippedWeapons.None);
             //Register to hunter attack event
             this._playerController.HunterAttackEvent += this._playerController.HitByHunterAttack;
+            this._playerController.ShooterAttackEvent += this._playerController.HitByShooterAttack;
         }
 
         public override void OnStateUpdate()
@@ -35,7 +36,7 @@ namespace Assets.Scripts.Control
             var input = Input.GetAxisRaw("Fire2");
             if (input > 0.0f)
             {
-                if ((this._blitzPressTimer += Time.deltaTime) >= 0.05f)
+                if ((this._blitzPressTimer += Utils.Utils.getRealDeltaTime()) >= 0.05f)
                 {
                     this._playerController.ChangeState(PlayerCharacterStateMachine.PlayerStates.Blitz);
                 }
@@ -62,7 +63,7 @@ namespace Assets.Scripts.Control
             if (input > 0.0f)
             {
                 //Holding the hammer strike button
-                this._strikePressTimer += Time.deltaTime;
+                this._strikePressTimer += Utils.Utils.getRealDeltaTime();
                 if (this._strikePressTimer >= this._playerController.HammerChargeMinimalHold)
                 {
                     //Hammer strike button held
@@ -81,7 +82,7 @@ namespace Assets.Scripts.Control
         private void CheckRepair()
         {
             var input = Input.GetAxisRaw("Fire4");
-            if(input > 0.0f)
+            if(input > 0.0f && this._playerController.AmmoCount > 0)
             {
                 this._playerController.ChangeState(PlayerCharacterStateMachine.PlayerStates.Repairing);
             }
@@ -90,6 +91,7 @@ namespace Assets.Scripts.Control
         public override void Exit()
         {
             this._playerController.HunterAttackEvent -= this._playerController.HitByHunterAttack;
+            this._playerController.ShooterAttackEvent -= this._playerController.HitByShooterAttack;
         }
 
         public override PlayerCharacterStateMachine.PlayerStates GetStateType()

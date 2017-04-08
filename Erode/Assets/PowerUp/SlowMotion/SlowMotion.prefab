@@ -104,6 +104,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b365633867a4ff941a6a52135351d4f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Lifetime: 10
-  Duration: 10
+  Lifetime: 5
+  Duration: 5
   ExpirePrefab: {fileID: 178966, guid: d132ea92e4a50814ab98dbdfbf4678fd, type: 2}

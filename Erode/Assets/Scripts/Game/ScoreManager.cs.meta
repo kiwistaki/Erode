@@ -1,10 +1,12 @@
 fileFormatVersion: 2
 guid: 63357ae4894e472499c5a7e81d36dbd4
-timeCreated: 1487009421
+timeCreated: 1490393691
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - PointPopup: {fileID: 1241022044008282, guid: db7e647c65f923948be6f3aa9aed2e74,
+      type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

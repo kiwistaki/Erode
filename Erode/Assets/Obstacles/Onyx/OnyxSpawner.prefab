@@ -57,8 +57,8 @@ MonoBehaviour:
   Height: 0
   Radius: 35
   AngleVariation: 35
-  SpawnTime: 30
-  OnyxAmplitude: 5
-  OnyxSpeed: 1.5
-  OnyxPeriod: 5
-  OnyxBalls: 25
+  SpawnTime: 60
+  OnyxAmplitude: 7
+  OnyxSpeed: 1
+  OnyxPeriod: 10
+  OnyxBalls: 15

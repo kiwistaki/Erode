@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -24,8 +25,10 @@ namespace Assets.Scripts.HexGridGenerator
         [Range(0.0f, 1.0f)]
         public float HexHpVariation = 0.1f;
         public float HexErodeRate = 1.0f;
-        [Range(0.01f,0.5f)]
+        [Range(0.01f, 0.5f)]
         public float ShakeStrenght = 0.05f;
+        public GameObject TileHitVfxPrefab;
+        
 
         //Generation Options
         public bool addColliders = true;
@@ -46,6 +49,8 @@ namespace Assets.Scripts.HexGridGenerator
                 new CubeIndex(0, -1, 1)
             };
 
+        private bool _isGridWaving = false;
+
         #region Getters and Setters
         public Dictionary<string, Tile> Tiles
         {
@@ -56,6 +61,12 @@ namespace Assets.Scripts.HexGridGenerator
         {
             get { return this._borderHexes; }
             set { this._borderHexes = value; }
+        }
+
+        public bool IsGridWaving
+        {
+            get { return _isGridWaving; }
+            set { _isGridWaving = value; StartCoroutine(WaitTimeBetweenWaves()); }
         }
         #endregion
 
@@ -96,9 +107,16 @@ namespace Assets.Scripts.HexGridGenerator
 
         public Tile GetRandomBorderTile()
         {
-            var rnd = new System.Random();
-            var randomEntry = BorderHexes.ElementAt(rnd.Next(0, BorderHexes.Count-1));
-            return randomEntry.Value;
+            if (this.BorderHexes.Count != 0)
+            {
+                var rnd = Random.value;
+                var randomEntry = this.BorderHexes.ElementAt((int)(rnd * this.BorderHexes.Count - 0.1));
+                return randomEntry.Value;
+            }
+            else
+            {
+                return this.GetRandomTile(false, false);
+            }
         }
 
         public void GenerateGrid()
@@ -135,7 +153,7 @@ namespace Assets.Scripts.HexGridGenerator
 
         public void ClearGrid()
         {
-            Debug.Log("Clearing grid...");
+            //Debug.Log("Clearing grid...");
             foreach (var tile in this._grid.Values)
             {
                 DestroyImmediate(tile.transform.parent.gameObject, false);
@@ -254,7 +272,7 @@ namespace Assets.Scripts.HexGridGenerator
             {
                 query = this._grid.Values.Where(
                 x =>
-                x.Hp > 0 
+                x.Hp > 0
                 ).ToArray();
             }
             else
@@ -264,7 +282,7 @@ namespace Assets.Scripts.HexGridGenerator
 
             if (query.Length > 0)
             {
-                return query[(int) Random.Range(0.0f, query.Length - 0.1f)];
+                return query[(int)Random.Range(0.0f, query.Length - 0.1f)];
             }
             else
             {
@@ -327,12 +345,18 @@ namespace Assets.Scripts.HexGridGenerator
                 tile.Erode();
             }
         }
+
+        private IEnumerator WaitTimeBetweenWaves()
+        {
+            yield return new WaitForSeconds(0.5f);
+            _isGridWaving = false;
+        }
         #endregion
 
         #region Generation
         private void GenHexShape()
         {
-            Debug.Log("Generating hexagonal shaped grid...");
+            //Debug.Log("Generating hexagonal shaped grid...");
 
             Tile tile;
             Vector3 pos = Vector3.zero;

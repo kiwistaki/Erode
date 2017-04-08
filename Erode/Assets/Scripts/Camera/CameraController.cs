@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Assets.Scripts.Utils;
 
 namespace Assets.Scripts.Camera
 {
@@ -17,7 +18,7 @@ namespace Assets.Scripts.Camera
         void Update()
         {
             Vector3 targetCamPos = this.target.position + this.offset;
-            this.transform.position = Vector3.Lerp(this.transform.position, targetCamPos, this.smoothing * Time.deltaTime);
+            this.transform.position = Vector3.Lerp(this.transform.position, targetCamPos, this.smoothing * Utils.Utils.getRealDeltaTime());
         }
     }
 }

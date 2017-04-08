@@ -61,6 +61,13 @@ namespace Assets.Obstacles.Comet
                 case "Player":
                     collider.GetComponent<PlayerController>().OnCometCollision(this.gameObject);
                     break;
+                case "Charger":
+                    collider.GetComponent<ChargerController>().OnCometCollision(this.gameObject);
+                    break;
+
+                case "Shooter":
+                    collider.GetComponent<ShooterController>().OnCometCollision(this.gameObject);
+                    break;
 
                 case "Target":
                     GameObject target = collider.gameObject;

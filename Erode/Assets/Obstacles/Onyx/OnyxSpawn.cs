@@ -9,8 +9,8 @@ namespace Assets.Obstacles.Onyx
 {
     class OnyxSpawn : MonoBehaviour
     {
-        public GameObject OnyxPrefab;
-        public GameObject OnyxTrailPrefab;
+        public GameObject OnyxPrefab = null;
+        public GameObject OnyxTrailPrefab = null;
         public float Height = 0.0f;
         public float Radius = 35.0f;
         [Range(0.0f, 180.0f)]

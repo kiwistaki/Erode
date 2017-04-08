@@ -26,6 +26,9 @@ namespace Assets.Scripts.Control
             this._playerController.EquipWeapons(PlayerController.EquippedWeapons.None);
             //Disable knnockback
             this._playerController.AsteroidCollisionEvent -= this._playerController.DefaultCollision;
+
+            this._playerController.EMPEvent -= this._playerController.InjuredPlayer;
+            this._playerController.EMPEvent += this._playerController.InjuredPlayerDelayed;
         }
 
         public override void OnStateUpdate()
@@ -56,6 +59,8 @@ namespace Assets.Scripts.Control
                     this._playerController.AsteroidCollisionEvent += this._playerController.DefaultCollision;
                 }
             }
+            this._playerController.EMPEvent -= this._playerController.InjuredPlayerDelayed;
+            this._playerController.EMPEvent += this._playerController.InjuredPlayer;
         }
 
         private void StunComplete()
