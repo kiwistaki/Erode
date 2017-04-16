@@ -17,7 +17,6 @@ namespace Assets.PowerUp
         private Image _superSpeedIcon, _slowMotionIcon, _slowMotionBorder, _scoreMultIcon;
         private Text _superSpeedTimerText, _slowMotionTimerText, _scoreMultTimerText,
             _superSpeedCountText, _scoreMultCountText;
-        private Canvas _HUDCanvas;
         private GameObject _bonusesPanel;
         private RectTransform _bonusesPanelRT;
 
@@ -43,6 +42,10 @@ namespace Assets.PowerUp
                     _scoreManager.scoreMultiplier *= 2;
                     _scoreMultTimers.Insert(_scoreMultTimers.Count, duration);
                     goto default;
+                case AbstractPowerUp.PowerUpType.CircleRepair:
+                    break;
+                case AbstractPowerUp.PowerUpType.ThreeWayRepair:
+                    break;
                 default:
                     ShowBonusInUI(type);
                     break;
@@ -89,7 +92,6 @@ namespace Assets.PowerUp
             this._scoreMultTimerText = GameObject.Find("ScoreMultiplierTimer").GetComponent<Text>();
             this._superSpeedCountText = GameObject.Find("SuperSpeedCountText").GetComponent<Text>();
             this._scoreMultCountText = GameObject.Find("ScoreMultiplierCountText").GetComponent<Text>();
-            this._HUDCanvas = GameObject.Find("HUDCanvas").GetComponent<Canvas>();
             this._bonusesPanel = GameObject.Find("BonusesPanel");
             this._bonusesPanelRT = _bonusesPanel.GetComponent<RectTransform>();
             this._bonusesPanelRT.anchoredPosition += new Vector2(0f, -2*this._bonusesPanelRT.anchoredPosition.y);

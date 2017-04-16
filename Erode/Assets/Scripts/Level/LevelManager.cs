@@ -16,7 +16,7 @@ namespace Assets.Scripts.Level
         public GameObject Spawners;
 
         private ScoreManager _scoreManager;
-        private Text _levelText;
+        private GameObject _levelPanel;
 
         private Dictionary<string, AbstractSpawner> _spawners = new Dictionary<string, AbstractSpawner>();
         private int _scoreToNextLevel = 1000000;
@@ -46,7 +46,7 @@ namespace Assets.Scripts.Level
         private void Awake()
         {
             _scoreManager = GameObject.Find("MainCamera").GetComponent<ScoreManager>();
-            _levelText = GameObject.Find("LevelText").GetComponent<Text>();
+            _levelPanel = GameObject.Find("LevelPanel");
 
             _spawners.Add("asteroid", Spawners.GetComponent<Spawners.AsteroidSpawner>());
             _spawners.Add("blackhole", Spawners.GetComponent<Spawners.BlackholeSpawner>());
@@ -88,13 +88,13 @@ namespace Assets.Scripts.Level
         public void IncreaseLevel() 
         {
             _currentLevel++;
-            Debug.Log( "Current Level: " + _currentLevel);
+            //Debug.Log( "Current Level: " + _currentLevel);
         }
 
         public void DecreaseLevel()
         {
             _currentLevel--;
-            Debug.Log("Current Level: " + _currentLevel);
+            //Debug.Log("Current Level: " + _currentLevel);
         }
 
         public void LoadLevel(LevelNumber level)
@@ -126,43 +126,59 @@ namespace Assets.Scripts.Level
                     {
                         bool IsSpeedPresent = Convert.ToBoolean(item.Attribute(XName.Get("speed")).Value),
                             IsSlowPresent = Convert.ToBoolean(item.Attribute(XName.Get("slow")).Value),
-                            IsScorePresent = Convert.ToBoolean(item.Attribute(XName.Get("score")).Value);
-                        if (IsSpeedPresent) ((Spawners.PowerUpSpawner)spawner).EnablePowerUp(PowerUpSpawner.PowerUpType.SuperSpeed);
-                        if (IsSlowPresent) ((Spawners.PowerUpSpawner)spawner).EnablePowerUp(PowerUpSpawner.PowerUpType.SlowMotion);
-                        if (IsScorePresent) ((Spawners.PowerUpSpawner)spawner).EnablePowerUp(PowerUpSpawner.PowerUpType.ScoreMultiplier);
+                            IsScorePresent = Convert.ToBoolean(item.Attribute(XName.Get("score")).Value),
+                            IsCircleRepairPresent = Convert.ToBoolean(item.Attribute(XName.Get("circleRepair")).Value),
+                            IsThreeWayRepairPresent = Convert.ToBoolean(item.Attribute(XName.Get("threeWayRepair")).Value);
+                        if (IsSpeedPresent) ((PowerUpSpawner)spawner).EnablePowerUp(PowerUpSpawner.PowerUpType.SuperSpeed);
+                        if (IsSlowPresent) ((PowerUpSpawner)spawner).EnablePowerUp(PowerUpSpawner.PowerUpType.SlowMotion);
+                        if (IsScorePresent) ((PowerUpSpawner)spawner).EnablePowerUp(PowerUpSpawner.PowerUpType.ScoreMultiplier);
+                        if(IsCircleRepairPresent) ((PowerUpSpawner)spawner).EnablePowerUp(PowerUpSpawner.PowerUpType.CircleRepair);
+                        if (IsThreeWayRepairPresent) ((PowerUpSpawner)spawner).EnablePowerUp(PowerUpSpawner.PowerUpType.ThreeWayRepair);
                     }
                     spawner.Initialize(intensity, baseNumber, baseTime, parent);
                     spawner.ActivateSpawner();
                 }
             }
 
-            // Show current level in UI
-            this._levelText.GetComponent<Text>().text = "Level " + (int)(_currentLevel + 1);
-            this._levelText.color = new Color(1f, 1f, 1f, 0f);
-            iTween.iTween.ValueTo(this._levelText.gameObject, iTween.iTween.Hash(
-            "name", "Appear",
-            "from", new Color(1f, 1f, 1f, 0f),
-            "to", new Color(1f,1f,1f,1f),
-            "time", 2f,
-            "onupdatetarget", this.gameObject,
-            "onupdate", "UpdateAppear",
-            "oncompletetarget", this.gameObject,
-            "oncomplete", "OnCompleteAppear",
-            "ignoretimescale", true
-            ));
+        // Show current level in UI
+        GameObject.Find("LevelText").GetComponent<Text>().text = "Level " + (int)(_currentLevel + 1);
+        Color fromColor = this._levelPanel.GetComponent<Image>().color, toColor = this._levelPanel.GetComponent<Image>().color;
+        fromColor.a = 0f; toColor.a = 1f;
+        this._levelPanel.GetComponent<Image>().color = fromColor;
+        iTween.iTween.ValueTo(this._levelPanel.gameObject, iTween.iTween.Hash(
+        "name", "Appear",
+        "from", fromColor,
+        "to", toColor,
+        "time", 2f,
+        "onupdatetarget", this.gameObject,
+        "onupdate", "UpdateAppear",
+        "oncompletetarget", this.gameObject,
+        "oncomplete", "OnCompleteAppear",
+        "ignoretimescale", true
+        ));
         }
 
         private void UpdateAppear(Color color)
         {
-            this._levelText.color = color;
+            this._levelPanel.GetComponent<Image>().color = color;
+            color.r = 1f; color.g = 1f; color.b = 1f;
+            foreach(Transform t in _levelPanel.transform)
+            {
+                if (t.GetComponent<Image>() != null)
+                    t.GetComponent<Image>().color = color;
+                else
+                    t.GetComponent<Text>().color = color;
+            }
         }
 
         private void OnCompleteAppear()
         {
-            iTween.iTween.ValueTo(this._levelText.gameObject, iTween.iTween.Hash(
+            Color fromColor = this._levelPanel.GetComponent<Image>().color, toColor = this._levelPanel.GetComponent<Image>().color;
+            fromColor.a = 1f; toColor.a = 0f;
+            iTween.iTween.ValueTo(this._levelPanel.gameObject, iTween.iTween.Hash(
             "name", "Disappear",
-            "from", new Color(1f, 1f, 1f, 1f),
-            "to", new Color(1f, 1f, 1f, 0f),
+            "from", fromColor,
+            "to", toColor,
             "time", 2f,
             "onupdatetarget", this.gameObject,
             "onupdate", "UpdateDisappear",
@@ -172,7 +188,15 @@ namespace Assets.Scripts.Level
         
         private void UpdateDisappear(Color color)
         {
-            this._levelText.color = color;
+            this._levelPanel.GetComponent<Image>().color = color;
+            color.r = 1f; color.g = 1f; color.b = 1f;
+            foreach (Transform t in _levelPanel.transform)
+            {
+                if (t.GetComponent<Image>() != null)
+                    t.GetComponent<Image>().color = color;
+                else
+                    t.GetComponent<Text>().color = color;
+            }
         }
     }
 }

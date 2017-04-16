@@ -18,7 +18,6 @@ namespace Assets.Scripts.Control
 
             this._shooterController.ShooterAnimator.SetTrigger("ShooterDie");
             this._shooterController.GetComponent<CapsuleCollider>().enabled = false;
-            this._shooterController.GetComponent<CharacterController>().enabled = false;
         }
 
 

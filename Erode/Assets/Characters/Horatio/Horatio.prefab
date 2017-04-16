@@ -5004,9 +5004,9 @@ MonoBehaviour:
   BlitzMaxTime: 2
   BlitzSpeed: 7.8
   BlitzTurnSpeed: 2.25
-  BlitzStunTimeAsteroid: 1
+  BlitzStunTimeAsteroid: 0.75
   SpinMinTime: 0.5
-  SpinRotateSpeed: 2
+  SpinRotateSpeed: 2.5
   SpinMoveSpeed: 1
   SpinMoveSpeedDecay: 6
   RepairTurnSpeed: 0.2

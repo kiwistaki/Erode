@@ -52,6 +52,7 @@ namespace Assets.Obstacles.Comet
                         badaboom.setPlaybackSpeed(0.8f);
                         badaboom.simulate(.1f);
                         badaboom.play();
+                        this.GetComponent<AudioSource>().Play();
 
                         this._firstCollision = false;
                     }

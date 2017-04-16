@@ -52,6 +52,7 @@ namespace Assets.Scripts.Control
                     ast.AsteroidVelocity = this.PlayerController.transform.forward * ast.AsteroidVelocity.magnitude;
                     ast.HitType = HammerType.Quick;
                     this.PlayerController.PlayHitEffect(this.transform.position);
+                    this.DisableHammer();
                     break;
 
                 case HammerType.ChargedLow:
@@ -107,6 +108,7 @@ namespace Assets.Scripts.Control
                 case HammerType.Quick:
                     hunt.HitPoint -= hunt.HitPoint;
                     this.PlayerController.PlayHitEffect(this.transform.position);
+                    this.DisableHammer();
                     break;
 
                 case HammerType.ChargedMed:
@@ -138,6 +140,43 @@ namespace Assets.Scripts.Control
             }
         }
 
+        public void OnBoltCollision(GameObject bolt, float stunnedTime)
+        {
+            switch (this.StrikeHammerType)
+            {
+                case HammerType.Undefined:
+                    throw new UnityException("HammerController::OnShooterCollision: Usage of undefined enum");
+
+                case HammerType.Quick:
+                    //this is a C# fallthrough
+                    goto case HammerType.ChargedLow;
+
+                case HammerType.ChargedMed:
+                    //this is a C# fallthrough
+                    goto case HammerType.ChargedLow;
+
+                case HammerType.ChargedMax:
+                    //this is a C# fallthrough
+                    goto case HammerType.ChargedLow;
+
+                case HammerType.ChargedLow:
+                    //this.PlayerController.OnShooterAttackEvent(bolt, stunnedTime);
+                    bolt.GetComponent<BoltController>().TimeToDie();
+                    break;
+
+                case HammerType.Spin:
+                    bolt.GetComponent<BoltController>().ReverseDirection();
+                    break;
+
+                case HammerType.Disabled:
+                    //do nothing
+                    break;
+
+                default:
+                    throw new UnityException("HammerController::OnShooterCollision: " + this.StrikeHammerType.ToString() + " IS NOT IMPLEMENTED");
+            }
+        }
+
         public void OnShooterCollision(GameObject shooter)
         {
             var shoot = shooter.GetComponent<ShooterController>();
@@ -149,6 +188,7 @@ namespace Assets.Scripts.Control
                 case HammerType.Quick:
                     shoot.HitPoint -= shoot.HitPoint;
                     this.PlayerController.PlayHitEffect(this.transform.position);
+                    this.DisableHammer();
                     break;
 
                 case HammerType.ChargedMed:
@@ -191,6 +231,7 @@ namespace Assets.Scripts.Control
                 case HammerType.Quick:
                     charg.HitPoint -= charg.HitPoint;
                     this.PlayerController.PlayHitEffect(this.transform.position);
+                    this.DisableHammer();
                     break;
 
                 case HammerType.ChargedLow:
@@ -210,7 +251,6 @@ namespace Assets.Scripts.Control
 
                 case HammerType.Spin:
                     charg.HitPoint -= 1;
-                    charg.OnAsteroidCollision(this.PlayerController.gameObject);
                     this.PlayerController.PlayHitEffect(this.transform.position);
                     break;
 
@@ -252,7 +292,6 @@ namespace Assets.Scripts.Control
                     break;
 
                 case HammerType.Spin:
-                    charg.DefaultCollision(this.PlayerController.gameObject);
                     this.PlayerController.PlayHitEffect(this.transform.position);
                     break;
 
@@ -264,6 +303,7 @@ namespace Assets.Scripts.Control
                     throw new UnityException("HammerController::OnHunterCollision: " + this.StrikeHammerType.ToString() + " IS NOT IMPLEMENTED");
             }
         }
+
         public void OnTileCollision(GameObject tile)
         {
             var t = tile.GetComponent<Tile>();
@@ -272,7 +312,7 @@ namespace Assets.Scripts.Control
                 case HammerType.ChargedMed:
                     if (!Grid.inst.IsGridWaving)
                     {
-                        this.StartTileWave(t, this.MedWaveRadius);
+                        Utils.Utils.StartTileWave(t, this.MedWaveRadius);
                         Grid.inst.IsGridWaving = true;
                     }
                     break;
@@ -280,7 +320,7 @@ namespace Assets.Scripts.Control
                 case HammerType.ChargedMax:
                     if (!Grid.inst.IsGridWaving)
                     {
-                        this.StartTileWave(t, this.HighWaveRadius);
+                        Utils.Utils.StartTileWave(t, this.HighWaveRadius);
                         Grid.inst.IsGridWaving = true;
                     }
 
@@ -304,49 +344,13 @@ namespace Assets.Scripts.Control
                 case HammerType.ChargedLow:
                     if (!Grid.inst.IsGridWaving)
                     {
-                        this.StartTileWave(t, this.LowWaveRadius);
+                        Utils.Utils.StartTileWave(t, this.LowWaveRadius);
                         Grid.inst.IsGridWaving = true;
                     }
                     break;
             }
-            this.StrikeHammerType = HammerType.Disabled;
-        }
-
-        private void StartTileWave(Tile t, int waveRadius)
-        {
-            // Initialize the "wave"
-            List<List<Tile>> concentricCircles = new List<List<Tile>>();
-            for (int i = 0; i < waveRadius; i++)
-                concentricCircles.Add(new List<Tile>());
-            // Find all the concentric circles from the center
-            foreach (KeyValuePair<string, Tile> pair in Grid.inst.Tiles)
-            {
-                int distance = Grid.inst.Distance(pair.Value, t);
-                if (distance < waveRadius)
-                    concentricCircles[distance].Add(pair.Value);
-            }
-            // Set all the iTweens
-            float delay = 0.0f;
-            foreach (List<Tile> circle in concentricCircles)
-            {
-                foreach (Tile tile in circle)
-                {
-                    iTween.iTween.PunchPosition(tile.gameObject, iTween.iTween.Hash
-                       ("name", "Wave"
-                           , "time", 0.5f
-                           , "delay", delay
-                           , "onstarttarget", tile.gameObject
-                           , "onstart", "ToWavingState"
-                           , "onupdatetarget", tile.gameObject
-                           , "onupdate", "UpdateYAxis"
-                           , "oncompletetarget", tile.gameObject
-                           , "oncomplete", "ResetTransform"
-                           , "ignoretimescale", false
-                       ));
-                }
-                delay += 0.05f;
-            }
-        }
+            this.DisableHammer();
+        }        
 
         private void OnTriggerEnter(Collider other)
         {
@@ -354,6 +358,11 @@ namespace Assets.Scripts.Control
             {
                 this.OnTileCollision(other.gameObject);
             }
+        }
+
+        private void DisableHammer()
+        {
+            this.StrikeHammerType = HammerType.Disabled;
         }
     }
 }

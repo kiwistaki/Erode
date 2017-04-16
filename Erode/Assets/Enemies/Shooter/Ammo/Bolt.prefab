@@ -137,7 +137,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d3065ebd7c71c4458a8b6804cd0bba3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4
+  Speed: 10
   PlayerStunnedTime: 0.5
 --- !u!136 &136644840571119522
 CapsuleCollider:

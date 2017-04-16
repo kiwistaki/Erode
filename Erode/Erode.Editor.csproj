@@ -148,6 +148,10 @@
     <None Include="Assets\Imported\Retro Info Boxes\Fonts\lobster-two\SIL Open Font License.txt" />
     <None Include="Assets\Imported\Retro Info Boxes\Fonts\lobster\License.txt" />
     <None Include="Assets\Imported\Retro Info Boxes\Fonts\lobster\Readme.txt" />
+    <None Include="Assets\Imported\Space Background Multipack\Materials\Unlit Screen Blend-Looping + Flickering.shader" />
+    <None Include="Assets\Imported\Space Background Multipack\Materials\Unlit Screen Blend-Looping.shader" />
+    <None Include="Assets\Imported\Space Background Multipack\Materials\Unlit-Looping.shader" />
+    <None Include="Assets\Imported\Space Background Multipack\Skybox\Material\Why is this darker.txt" />
     <None Include="Assets\Obstacles\Blackhole\HiddenTwistEffect.shader" />
     <None Include="Assets\Particles\Editor Extensions\Utilities\Multi-Asset Renamer\README.txt" />
     <None Include="Assets\Particles\README - Action VFX.txt" />

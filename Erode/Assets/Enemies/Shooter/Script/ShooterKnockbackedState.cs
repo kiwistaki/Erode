@@ -15,6 +15,7 @@ namespace Assets.Scripts.Control
             this._collidingObject = args as GameObject;
 
             this._collisionImpulse = this._collidingObject.transform.position - this._shooterController.transform.position;
+            this._collisionImpulse.y = 0;
             this._collisionImpulse.Normalize();
         }
 
@@ -37,8 +38,8 @@ namespace Assets.Scripts.Control
             }
             else
             {
-                this._shooterController.ShooterCharacterController.Move(this._shooterController.CometKnockbackStrenght * Time.deltaTime * -this._collisionImpulse * Mathf.Pow(this._knockbackTime / this._shooterController.CometKnockbackTime, 3));
-                this._shooterController.ShooterCharacterController.Move((this._shooterController.CometAirKnockbackStrenght * this._shooterController.Gravity * Mathf.Pow(this._knockbackTime / this._shooterController.CometKnockbackTime, 3)) * Time.deltaTime * Vector3.up);
+                this._shooterController.transform.Translate(this._shooterController.CometKnockbackStrenght * Time.deltaTime * -this._collisionImpulse * Mathf.Pow(this._knockbackTime / this._shooterController.CometKnockbackTime, 3));
+                this._shooterController.transform.Translate((this._shooterController.CometAirKnockbackStrenght * this._shooterController.Gravity * Mathf.Pow(this._knockbackTime / this._shooterController.CometKnockbackTime, 3)) * Time.deltaTime * Vector3.up);
             }
         }
 

@@ -51,6 +51,7 @@ namespace Assets.Obstacles.Asteroide
             {
                 case "Asteroid":
                     collider.GetComponent<AsteroideController>().CollisionBetweenAsteroids(this.gameObject);
+                    this.GetComponent<AudioSource>().Play();
                     break;
 
                 case "Player":

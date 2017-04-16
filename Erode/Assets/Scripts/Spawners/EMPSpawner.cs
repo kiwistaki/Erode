@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Control;
+﻿using Assets.Obstacles.EMP;
+using Assets.Scripts.Control;
 using Assets.Scripts.HexGridGenerator;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,8 @@ namespace Assets.Scripts.Spawners
         public GameObject EMPPulse;
         public PlayerController PlayerController;
         public int SpawnDistanceFromPlayer = 10;
+
+        private bool _isFirstSpawn = true;
 
         protected override void Spawn()
         {
@@ -34,15 +37,20 @@ namespace Assets.Scripts.Spawners
                 }
                 Tile spawnTile = tiles[new System.Random().Next(tiles.Count)];
                 pos = spawnTile.transform.position;
-                pos.y += 1.5f;
+                pos.y = 1.5f;
             }
             else
             {
                 pos = Grid.inst.GetRandomBorderTile().transform.position;
-                pos = pos + new Vector3(0f, 1.5f, 0f);
+                pos.y = 1.5f;
                 
             }
-            Instantiate(this.EMPPulse, pos, Quaternion.Euler(0, 0, 0), _spawnObjectParent.transform);
+            GameObject emp = Instantiate(this.EMPPulse, pos, Quaternion.Euler(0, 0, 0), _spawnObjectParent.transform);
+            if (_isFirstSpawn)
+            {
+                emp.GetComponent<EMPController>().ShowHitTutorial();
+                _isFirstSpawn = false;
+            }
         }
     }
 }

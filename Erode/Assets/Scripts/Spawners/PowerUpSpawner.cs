@@ -1,4 +1,6 @@
-﻿using Assets.Scripts.HexGridGenerator;
+﻿using Assets.PowerUp.CircleRepair;
+using Assets.PowerUp.ThreeWayRepair;
+using Assets.Scripts.HexGridGenerator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +23,8 @@ namespace Assets.Scripts.Spawners
             SuperSpeed,
             ScoreMultiplier,
             SlowMotion,
+            CircleRepair,
+            ThreeWayRepair,
             PowerUpCount
         }
 
@@ -48,6 +52,20 @@ namespace Assets.Scripts.Spawners
                             break;
                         case PowerUpType.SlowMotion:
                             Instantiate(this.SlowMotionPrefab, position, Quaternion.identity, _spawnObjectParent.transform);
+                            break;
+                        case PowerUpType.CircleRepair:
+                            tile.GetComponent<MeshRenderer>().material.Lerp(tile.GetComponent<MeshRenderer>().material, Grid.inst.ShinyTileMaterial, 0.4f);
+                            Instantiate(Grid.inst.ShinyTileVFXPrefab1, tile.transform.position + new Vector3(0f, 1.5f, 0f), Quaternion.Euler(0f, 0f, 0f), tile.transform);
+                            tile.gameObject.AddComponent<CircleRepair>();
+                            tile.GetComponent<MeshCollider>().convex = true;
+                            tile.GetComponent<MeshCollider>().isTrigger = true;
+                            break;
+                        case PowerUpType.ThreeWayRepair:
+                            tile.GetComponent<MeshRenderer>().material.Lerp(tile.GetComponent<MeshRenderer>().material, Grid.inst.ShinyTileMaterial, 0.4f);
+                            Instantiate(Grid.inst.ShinyTileVFXPrefab2, tile.transform.position + new Vector3(0f, 1.5f, 0f), Quaternion.Euler(0f, 0f, 0f), tile.transform);
+                            tile.gameObject.AddComponent<ThreeWayRepair>();
+                            tile.GetComponent<MeshCollider>().convex = true;
+                            tile.GetComponent<MeshCollider>().isTrigger = true;
                             break;
                         default:
                             throw new UnityException("PowerUpSpawner::SpawnPowerUp: " + type.ToString() + " IS NOT IMPLEMENTED");

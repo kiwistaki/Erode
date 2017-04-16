@@ -28,6 +28,7 @@ namespace Assets.Scripts.Control
             //Show hammer
             this._playerController.EquipWeapons(PlayerController.EquippedWeapons.Hammer);
             this._playerController.SetHammerType(HammerController.HammerType.Disabled);
+            this._playerController.PlayChargingVfx(0);
         }
 
         public override void OnStateUpdate()

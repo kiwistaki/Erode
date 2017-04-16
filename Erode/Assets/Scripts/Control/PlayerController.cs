@@ -143,13 +143,13 @@ namespace Assets.Scripts.Control
             }
         }
 
-        public delegate void ShooterAttackEventHandler(float stunnedTime);
+        public delegate void ShooterAttackEventHandler(GameObject bolt, float stunnedTime);
         public event ShooterAttackEventHandler ShooterAttackEvent;
-        public void OnShooterAttackEvent(float stunnedTime)
+        public void OnShooterAttackEvent(GameObject bolt, float stunnedTime)
         {
             if(this.ShooterAttackEvent != null)
             {
-                this.ShooterAttackEvent(stunnedTime);
+                this.ShooterAttackEvent(bolt, stunnedTime);
             }
         }
 
@@ -375,10 +375,16 @@ namespace Assets.Scripts.Control
             this.ChangeState(PlayerCharacterStateMachine.PlayerStates.Stunned, stunnedTime);
         }
 
-        public void HitByShooterAttack(float stunnedTime)
+        public void HitByShooterAttack(GameObject bolt, float stunnedTime)
         {
             this.PlayHitEffect(this.transform.position + 2 * this.transform.up);
             this.ChangeState(PlayerCharacterStateMachine.PlayerStates.Stunned, stunnedTime);
+            bolt.GetComponent<BoltController>().TimeToDie();
+        }
+
+        public void HitByShooterAttackSpin(GameObject bolt, float stunnedTime)
+        {
+            bolt.GetComponent<BoltController>().ReverseDirection();
         }
 
         public void ChangeState(PlayerCharacterStateMachine.PlayerStates state, object args)
@@ -416,6 +422,7 @@ namespace Assets.Scripts.Control
         public void PlayHitEffect(Vector3 pos)
         {
             Instantiate(this.HitVfxPrefab, pos, this.transform.rotation);
+            this.GetComponents<AudioSource>()[2].Play();
         }
 
         public void PlayChargingVfx(int i)

@@ -1,10 +1,14 @@
 fileFormatVersion: 2
 guid: 7e2a456d93abff748830103980e4ec2a
-timeCreated: 1486765578
+timeCreated: 1491763050
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - CometTargetRayVFX: {fileID: 1038244615561478, guid: 3b0d8085575318b44bee51c450c99bd8,
+      type: 2}
+  - CometTargetFlareVFX: {fileID: 1289435102627012, guid: 04f77f2ec64691541922e3694dea0cca,
+      type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

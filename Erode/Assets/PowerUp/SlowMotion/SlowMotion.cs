@@ -12,9 +12,7 @@ namespace Assets.PowerUps.SlowMotion
     public class SlowMotion : AbstractPowerUp
     {
         public GameObject ExpirePrefab;
-
-        private Image _slowMotionImage;
-        private bool _timerLock = false;
+        
         private PowerUpController _powerUpController;
 
         private new void Awake()
@@ -26,7 +24,6 @@ namespace Assets.PowerUps.SlowMotion
                 , "looptype", iTween.LoopType.pingPong
                 , "easetype", iTween.EaseType.easeInOutBack
                 ));
-            _slowMotionImage = GameObject.Find("HUDInfosPanel").GetComponent<Image>();
             _powerUpController = Camera.main.GetComponent<PowerUpController>();
         }
 

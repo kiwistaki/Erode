@@ -88,6 +88,7 @@ public class GameManager : MonoBehaviour {
         _lastTimeScale = Time.timeScale;
 
         Grid.GenerateGrid();
+        this.GetComponent<AudioSource>().Play();
     }
 	
 	// Update is called once per frame
@@ -98,6 +99,7 @@ public class GameManager : MonoBehaviour {
     public void GameOverRequest()
     {
         _context = new Context(new GameOverState(this));
+        this.GetComponent<AudioSource>().Stop();
     }
 
     void UpdateGameTimer()
@@ -163,6 +165,7 @@ public class GameManager : MonoBehaviour {
         _lastTimeScale = Time.timeScale;
         Time.timeScale = 0.0f;
         //iTween.Pause();
+        this.GetComponent<AudioSource>().Pause();
     }
 
     void UnpauseGame()
@@ -176,6 +179,7 @@ public class GameManager : MonoBehaviour {
         // Manage in-game property
         Time.timeScale = _lastTimeScale;
         //iTween.Resume();
+        this.GetComponent<AudioSource>().UnPause();
     }
 
     bool EndGame()
@@ -200,6 +204,8 @@ public class GameManager : MonoBehaviour {
             _leaderboardManager.AddHighscore(Convert.ToInt32(ScoreValue.text), _gameTimer);
             return true;
         }
+
+        
 
         return false;
     }
@@ -263,7 +269,7 @@ public class GameManager : MonoBehaviour {
             {
                 int levelInt = (int)g_manager._levelManager.getLevel();
                 levelInt -= 1;
-                if (levelInt > 0)
+                if (levelInt >= 0)
                 {
                     g_manager._levelManager.DecreaseLevel();
                     GameObject.Find("LevelText").GetComponent<Text>().text = "Level " + ++levelInt;

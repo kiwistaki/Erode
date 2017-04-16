@@ -7,7 +7,6 @@ namespace Assets.Scripts.Control
     {
         private float _chargeTimeIncrement = 0.0f;
         private int _chargeLevel = 0;
-        private List<GameObject> _hammerVfx = new List<GameObject>();
 
         public HammerChargingState(PlayerController player)
             : base(player, null)
@@ -62,11 +61,6 @@ namespace Assets.Scripts.Control
         public override PlayerCharacterStateMachine.PlayerStates GetStateType()
         {
             return PlayerCharacterStateMachine.PlayerStates.HammerCharging;
-        }
-
-        private void IncreaseChargeLevel()
-        {
-            
         }
     }
 }

@@ -28,7 +28,11 @@ namespace Assets.Scripts.HexGridGenerator
         [Range(0.01f, 0.5f)]
         public float ShakeStrenght = 0.05f;
         public GameObject TileHitVfxPrefab;
-        
+        public Material ShinyTileMaterial;
+        public GameObject ShinyTileVFXPrefab1;
+        public GameObject ShinyTileVFXPrefab2;
+
+
 
         //Generation Options
         public bool addColliders = true;

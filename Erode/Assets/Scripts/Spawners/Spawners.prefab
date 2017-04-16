@@ -29,8 +29,6 @@ GameObject:
   - component: {fileID: 114788436082335540}
   - component: {fileID: 114501194318175624}
   - component: {fileID: 114688607016236490}
-  - component: {fileID: 114929447995259952}
-  - component: {fileID: 114648682700819944}
   m_Layer: 0
   m_Name: Spawners
   m_TagString: Untagged
@@ -99,9 +97,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EMPPulse: {fileID: 1063745351190036, guid: ff01c23b88856624791a485fd34bcd7b, type: 2}
   PlayerController: {fileID: 0}
-  LayerMask:
-    serializedVersion: 2
-    m_Bits: 55
   SpawnDistanceFromPlayer: 10
 --- !u!114 &114389141592274462
 MonoBehaviour:
@@ -134,6 +129,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Blackhole: {fileID: 1576368168730732, guid: 64c22e82ee811dc41b69546f2262b4af, type: 2}
+  PlayerController: {fileID: 0}
+  MinimumDistanceFromPlayer: 8
 --- !u!114 &114501194318175624
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -148,19 +145,6 @@ MonoBehaviour:
   Shooter: {fileID: 1990809896212070, guid: e5836d050fdb354479bcd0d285bf2f22, type: 2}
   Spawner: {fileID: 1853152712187018, guid: ddee5c27f94760d4a97efaef0066a2d1, type: 2}
 --- !u!114 &114626840933175114
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1595862936140076}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93e55b2263b804040b81a50f32a00b99, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hunter: {fileID: 1262102485998528, guid: 8af2fabc60ea3a94d9630e8aae4e2aed, type: 2}
-  spawner: {fileID: 1853152712187018, guid: ddee5c27f94760d4a97efaef0066a2d1, type: 2}
---- !u!114 &114648682700819944
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -200,7 +184,7 @@ MonoBehaviour:
   OnyxTrailPrefab: {fileID: 1091640777313482, guid: b4fcaf91daddc8a468680a086ef21ab1,
     type: 2}
   Height: 0
-  Radius: 35
+  Radius: 20
   AngleVariation: 35
   OnyxAmplitude: 7
   OnyxSpeed: 1
@@ -222,16 +206,3 @@ MonoBehaviour:
   ScoreMultiplierPrefab: {fileID: 1006588088113640, guid: 259df1107d80a7e4cb8c8566c5b33808,
     type: 2}
   SlowMotionPrefab: {fileID: 186332, guid: 56bea99d2e219664e85ae9a044ac04f0, type: 2}
---- !u!114 &114929447995259952
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1595862936140076}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93e55b2263b804040b81a50f32a00b99, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hunter: {fileID: 1262102485998528, guid: 8af2fabc60ea3a94d9630e8aae4e2aed, type: 2}
-  spawner: {fileID: 1853152712187018, guid: ddee5c27f94760d4a97efaef0066a2d1, type: 2}

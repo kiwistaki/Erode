@@ -159,7 +159,7 @@ namespace Assets.Scripts.HexGridGenerator
             this.Hp = 0;
         }
 
-        public void RepairFromGun(Vector3 startPos)
+        public void RepairFromPosition(Vector3 startPos, bool isFromGun)
         {
             if (this.Hp > 0)
             {
@@ -177,30 +177,56 @@ namespace Assets.Scripts.HexGridGenerator
 
                     this._repairing = true;
                     this.GetComponent<MeshRenderer>().enabled = true;
-                    this.transform.localScale = Vector3.zero;
-                    this.transform.position = startPos;
-                    iTween.iTween.MoveTo(this.gameObject, iTween.iTween.Hash
-                        ("name", "Repair"
-                            , "position", Vector3.zero
-                            , "time", 0.25f
-                            , "looptype", iTween.iTween.LoopType.none
-                            , "easetype", iTween.iTween.EaseType.easeOutSine
-                            , "islocal", true
-                            , "oncomplete", "RepairFromGunComplete"
-                            , "ignoretimescale", true
-                        ));
-
-                    iTween.iTween.ScaleTo(this.gameObject, iTween.iTween.Hash
-                        ("name", "Repair"
-                            , "scale", Vector3.one
-                            , "time", 0.25f
-                            , "looptype", iTween.iTween.LoopType.none
-                            , "easetype", iTween.iTween.EaseType.easeOutSine
-                            , "ignoretimescale", true
-                        ));
+                    this.GetComponent<MeshCollider>().enabled = false;
+                    if (isFromGun)
+                        ApplyRepairTweenFromGun(startPos);
+                    else
+                        ApplyRepairTweenGeneral();
                 }
-                this.GetComponent<MeshCollider>().enabled = false;
             }
+        }
+
+        public void ApplyRepairTweenFromGun(Vector3 startPos)
+        {
+            this.transform.localScale = Vector3.zero;
+            this.transform.position = startPos;
+            iTween.iTween.MoveTo(this.gameObject, iTween.iTween.Hash
+                ("name", "Repair"
+                    , "position", Vector3.zero
+                    , "time", 0.25f
+                    , "looptype", iTween.iTween.LoopType.none
+                    , "easetype", iTween.iTween.EaseType.easeOutSine
+                    , "islocal", true
+                    , "oncomplete", "RepairComplete"
+                    , "ignoretimescale", true
+                ));
+
+            iTween.iTween.ScaleTo(this.gameObject, iTween.iTween.Hash
+                ("name", "Repair"
+                    , "scale", Vector3.one
+                    , "time", 0.25f
+                    , "looptype", iTween.iTween.LoopType.none
+                    , "easetype", iTween.iTween.EaseType.easeOutSine
+                    , "ignoretimescale", true
+                ));
+        }
+
+        public void ApplyRepairTweenGeneral()
+        {
+            this.transform.localScale = Vector3.zero;
+            this.transform.localPosition = Vector3.zero;
+
+            iTween.iTween.ScaleTo(this.gameObject, iTween.iTween.Hash
+                ("name", "Repair"
+                    , "scale", Vector3.one
+                    , "time", 0.5f
+                    , "looptype", iTween.iTween.LoopType.none
+                    , "easetype", iTween.iTween.EaseType.easeOutSine
+                    , "oncomplete", "RepairComplete"
+                    , "ignoretimescale", true
+                ));
+            GetComponent<MeshRenderer>().material.Lerp(GetComponent<MeshRenderer>().material, Grid.inst.ShinyTileMaterial, 0.4f);
+
         }
 
         //This hex lost one of its neighbours
@@ -215,11 +241,12 @@ namespace Assets.Scripts.HexGridGenerator
             this.MissingNeighbours -= 1;
         }
 
-        private void RepairFromGunComplete()
+        private void RepairComplete()
         {
             this._repairing = false;
             this.GetComponent<MeshCollider>().enabled = true;
             this.RandomizeHp();
+            GetComponent<MeshRenderer>().material.Lerp(GetComponent<MeshRenderer>().material, Grid.inst.hexMaterial, 1f);
         }
 
         private void RandomizeHp()

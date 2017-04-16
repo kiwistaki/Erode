@@ -12,7 +12,6 @@ namespace Assets.Scripts.Control
 
         public override void Enter()
         {
-            this._shooterController.ShooterAnimator.SetTrigger("ShooterFollow");
         }
 
         public override void OnStateUpdate()

@@ -24,6 +24,7 @@ TagManager:
   - ShooterGun
   - Boundary
   - Shooter
+  - WindController
   layers:
   - Default
   - TransparentFX

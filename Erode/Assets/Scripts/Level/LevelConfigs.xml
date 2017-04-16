@@ -1,121 +1,170 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <configuration>
-  <level1 score="2500" erodeRate="0.35">
+  <level1 score="1500" erodeRate="0.30">
     <hunter intensity="3" baseNumber="3" baseTime="30" />
-    <asteroid intensity="3" baseNumber="5" baseTime="30" />
+    <shooter intensity="1" baseNumber="2" baseTime="30" />
+    <asteroid intensity="3" baseNumber="4" baseTime="30" />
     <powerups intensity="1" baseNumber="1" baseTime="5"
-              speed="false" slow="false" score="false" />
+              speed="false" slow="false" score="false"
+              circleRepair="false" threeWayRepair="false" />
   </level1>
-  <level2 score="2500" erodeRate="0.35">
+  <level2 score="1500" erodeRate="0.30">
     <hunter intensity="2" baseNumber="3" baseTime="30" />
+    <shooter intensity="1" baseNumber="2" baseTime="30" />
     <comet intensity="2" baseNumber="2" baseTime="30" />
+    <asteroid intensity="1" baseNumber="4" baseTime="30" />
     <powerups intensity="1" baseNumber="1" baseTime="5"
-              speed="false" slow="false" score="false" />
+              speed="false" slow="true" score="true"
+              circleRepair="false" threeWayRepair="false" />
   </level2>
-  <level3 score="3500" erodeRate="0.35">
-    <shooter intensity="3" baseNumber="3" baseTime="30" />
-    <asteroid intensity="1" baseNumber="3" baseTime="30" />
-    <comet intensity="1" baseNumber="3" baseTime="30" />
+  <level3 score="3000" erodeRate="0.30">
+    <hunter intensity="1" baseNumber="4" baseTime="30" />
+    <shooter intensity="3" baseNumber="2" baseTime="30" />
+    <asteroid intensity="1" baseNumber="4" baseTime="30" />
+    <comet intensity="1" baseNumber="2" baseTime="30" />
     <powerups intensity="1" baseNumber="1" baseTime="5"
-              speed="false" slow="true" score="true" />
+              speed="true" slow="true" score="true"
+              circleRepair="true" threeWayRepair="false" />
   </level3>
-  <level4 score="2000" erodeRate="0.35">
-    <hunter intensity="2" baseNumber="3" baseTime="30" />
-    <shooter intensity="1" baseNumber="3" baseTime="30" />
-    <asteroid intensity="3" baseNumber="3" baseTime="30" />
-    <solarwind intensity="2" baseNumber="1" baseTime="30" />
-    <powerups intensity="1" baseNumber="1" baseTime="5"
-              speed="true" slow="true" score="true" />
-  </level4>
-  <level5 score="3000" erodeRate="0.35">
+  <level4 score="2000" erodeRate="0.30">
+    <hunter intensity="1" baseNumber="4" baseTime="30" />
+    <shooter intensity="1" baseNumber="2" baseTime="30" />
     <charger intensity="3" baseNumber="2" baseTime="30" />
+    <blackhole intensity="2" baseNumber="2" baseTime="30" />
+    <asteroid intensity="2" baseNumber="4" baseTime="30" />
     <powerups intensity="1" baseNumber="1" baseTime="5"
-              speed="true" slow="true" score="true" />
-  </level5>
-  <level6 score="3500" erodeRate="0.35">
+              speed="true" slow="true" score="true"
+              circleRepair="true" threeWayRepair="false" />
+  </level4>
+  <level5 score="3000" erodeRate="0.30">
+    <hunter intensity="2" baseNumber="4" baseTime="30" />
     <charger intensity="2" baseNumber="2" baseTime="30" />
-    <asteroid intensity="2" baseNumber="3" baseTime="30" />
-    <blackhole intensity="3" baseNumber="3" baseTime="30" />
+    <comet intensity="2" baseNumber="2" baseTime="30" />
+    <asteroid intensity="3" baseNumber="4" baseTime="30" />
+    <blackhole intensity="2" baseNumber="2" baseTime="30" />
+    <emp intensity="1" baseNumber="1" baseTime="30" />
     <powerups intensity="1" baseNumber="1" baseTime="5"
-              speed="true" slow="true" score="true" />
+              speed="true" slow="true" score="true" 
+              circleRepair="true" threeWayRepair="false" />
+  </level5>
+  <level6 score="3500" erodeRate="0.30">
+    <charger intensity="2" baseNumber="2" baseTime="30" />
+    <hunter intensity="2" baseNumber="4" baseTime="30" />
+    <shooter intensity="1" baseNumber="2" baseTime="30" />
+    <asteroid intensity="2" baseNumber="4" baseTime="30" />
+    <comet intensity="2" baseNumber="2" baseTime="30" />
+    <blackhole intensity="2" baseNumber="2" baseTime="30" />
+    <emp intensity="1" baseNumber="1" baseTime="30" />
+    <powerups intensity="1" baseNumber="1" baseTime="5"
+              speed="true" slow="true" score="true"
+              circleRepair="true" threeWayRepair="true" />
   </level6>
-  <level7 score="4000" erodeRate="0.35">
-    <hunter intensity="2" baseNumber="3" baseTime="30" />
-    <comet intensity="3" baseNumber="3" baseTime="30" />
-    <emp intensity="2" baseNumber="2" baseTime="30" />
+  <level7 score="4000" erodeRate="0.30">
+    <hunter intensity="2" baseNumber="4" baseTime="30" />
+    <shooter intensity="2" baseNumber="2" baseTime="30" />
+    <charger intensity="1" baseNumber="2" baseTime="30" />
+    <comet intensity="2" baseNumber="2" baseTime="30" />
+    <onyx intensity="2" baseNumber="1" baseTime="60" />
+    <blackhole intensity="1" baseNumber="2" baseTime="30" />
+    <emp intensity="1" baseNumber="2" baseTime="30" />
     <powerups intensity="1" baseNumber="1" baseTime="5"
-              speed="true" slow="true" score="true" />
+              speed="true" slow="true" score="true"
+              circleRepair="true" threeWayRepair="true" />
   </level7>
-  <level8 score="4000" erodeRate="0.35">
-    <hunter intensity="2" baseNumber="3" baseTime="30" />
-    <shooter intensity="2" baseNumber="3" baseTime="30" />
-    <charger intensity="2" baseNumber="3" baseTime="30" />
-    <asteroid intensity="3" baseNumber="3" baseTime="30" />
+  <level8 score="4000" erodeRate="0.30">
+    <hunter intensity="1" baseNumber="4" baseTime="30" />
+    <shooter intensity="2" baseNumber="2" baseTime="30" />
+    <charger intensity="2" baseNumber="2" baseTime="30" />
+    <asteroid intensity="1" baseNumber="4" baseTime="30" />
+    <emp intensity="1" baseNumber="2" baseTime="30" />
+    <onyx intensity="1" baseNumber="1" baseTime="60" />
+    <comet intensity="2" baseNumber="2" baseTime="30" />    
     <powerups intensity="1" baseNumber="1" baseTime="5"
-              speed="true" slow="true" score="true" />
+              speed="true" slow="true" score="true"
+              circleRepair="true" threeWayRepair="true" />
   </level8>
-  <level9 score="4000" erodeRate="0.35">
-    <hunter intensity="3" baseNumber="3" baseTime="30" />
-    <asteroid intensity="4" baseNumber="3" baseTime="30" />
-    <blackhole intensity="2" baseNumber="3" baseTime="30" />
+  <level9 score="4000" erodeRate="0.30">
+    <hunter intensity="2" baseNumber="4" baseTime="30" />
+    <shooter intensity="1" baseNumber="3" baseTime="30" />
+    <charger intensity="1" baseNumber="2" baseTime="30" />
+    <asteroid intensity="3" baseNumber="4" baseTime="30" />
+    <blackhole intensity="2" baseNumber="2" baseTime="30" />
+    <onyx intensity="1" baseNumber="1" baseTime="60" />
+    <comet intensity="3" baseNumber="2" baseTime="30" /> 
+    <emp intensity="1" baseNumber="3" baseTime="30" />
     <powerups intensity="1" baseNumber="1" baseTime="5"
-              speed="true" slow="true" score="true" />
+              speed="true" slow="true" score="true"
+              circleRepair="true" threeWayRepair="true" />
   </level9>
-  <level10 score="1500" erodeRate="0">
-    <onyx intensity="5" baseNumber="1" baseTime="60" />
-  </level10>
-  <level11 score="4000" erodeRate="0.35">
-    <shooter intensity="5" baseNumber="3" baseTime="30" />
-    <emp intensity="3" baseNumber="3" baseTime="30" />
+  <level10 score="4500" erodeRate="0.30">
+    <hunter intensity="2" baseNumber="4" baseTime="30" />
+    <shooter intensity="2" baseNumber="2" baseTime="30" />
+    <charger intensity="1" baseNumber="2" baseTime="30" />
+    <asteroid intensity="3" baseNumber="4" baseTime="30" />
+    <emp intensity="1" baseNumber="3" baseTime="30" />
+    <blackhole intensity="1" baseNumber="2" baseTime="30" />
+    <onyx intensity="3" baseNumber="1" baseTime="60" />
+    <comet intensity="2" baseNumber="2" baseTime="30" /> 
     <powerups intensity="1" baseNumber="1" baseTime="5"
-              speed="true" slow="true" score="true" />
+              speed="true" slow="true" score="true" 
+              circleRepair="true" threeWayRepair="true"/>
+  </level10>
+  <level11 score="5000" erodeRate="0.30">
+    <hunter intensity="2" baseNumber="4" baseTime="30" />
+    <shooter intensity="3" baseNumber="2" baseTime="30" />
+    <asteroid intensity="3" baseNumber="4" baseTime="30" />
+    <comet intensity="2" baseNumber="2" baseTime="30" /> 
+    <onyx intensity="1" baseNumber="1" baseTime="60" />
+    <emp intensity="1" baseNumber="3" baseTime="30" />
+    <powerups intensity="1" baseNumber="1" baseTime="5"
+              speed="true" slow="true" score="true"  
+              circleRepair="true" threeWayRepair="true" />
   </level11>
-  <level12 score="4000" erodeRate="0.35">
-    <hunter intensity="1" baseNumber="3" baseTime="30" />
-    <charger intensity="3" baseNumber="3" baseTime="30" />
+  <level12 score="5000" erodeRate="0.30">
+    <hunter intensity="2" baseNumber="4" baseTime="30" />
+    <charger intensity="3" baseNumber="2" baseTime="30" />
     <asteroid intensity="3" baseNumber="3" baseTime="30" />
     <comet intensity="2" baseNumber="3" baseTime="30" />
     <blackhole intensity="2" baseNumber="3" baseTime="30" />
+    <emp intensity="1" baseNumber="3" baseTime="30" />
     <powerups intensity="1" baseNumber="1" baseTime="5"
-              speed="true" slow="true" score="true" />
+              speed="true" slow="true" score="true"
+              circleRepair="true" threeWayRepair="true" />
    </level12>
-  <level13 score="4000" erodeRate="0.35">
-    <hunter intensity="2" baseNumber="3" baseTime="30" />
-    <shooter intensity="3" baseNumber="3" baseTime="30" />
-    <charger intensity="1" baseNumber="3" baseTime="30" />
+  <level13 score="4000" erodeRate="0.30">
+    <hunter intensity="2" baseNumber="4" baseTime="30" />
+    <shooter intensity="3" baseNumber="2" baseTime="30" />
+    <charger intensity="2" baseNumber="2" baseTime="30" />
     <asteroid intensity="3" baseNumber="3" baseTime="30" />
     <comet intensity="3" baseNumber="3" baseTime="30" />
+    <emp intensity="1" baseNumber="3" baseTime="30" />
     <onyx intensity="1" baseNumber="3" baseTime="30" amplitude="0" />
     <powerups intensity="1" baseNumber="1" baseTime="5"
-              speed="true" slow="true" score="true" />
+              speed="true" slow="true" score="true"
+              circleRepair="true" threeWayRepair="true" />
   </level13>
-  <level14 score="4000" erodeRate="0.35">
-    <hunter intensity="4" baseNumber="3" baseTime="30" />
-    <charger intensity="1" baseNumber="3" baseTime="30" />
+  <level14 score="4000" erodeRate="0.30">
+    <hunter intensity="4" baseNumber="4" baseTime="30" />
+    <charger intensity="2" baseNumber="2" baseTime="30" />
     <asteroid intensity="3" baseNumber="3" baseTime="30" />
+    <emp intensity="1" baseNumber="3" baseTime="30" />
     <comet intensity="5" baseNumber="3" baseTime="30" />
     <powerups intensity="1" baseNumber="1" baseTime="5"
-              speed="true" slow="true" score="true" />
+              speed="true" slow="true" score="true"
+              circleRepair="true" threeWayRepair="true" />
   </level14>
-  <level15 score="1000000000" erodeRate="0.35">
-    <hunter intensity="3" baseNumber="3" baseTime="30" />
-    <shooter intensity="3" baseNumber="3" baseTime="30" />
-    <charger intensity="3" baseNumber="3" baseTime="30" />
+  <level15 score="1000000000" erodeRate="0.30">
+    <hunter intensity="4" baseNumber="4" baseTime="30" />
+    <shooter intensity="4" baseNumber="2" baseTime="30" />
+    <charger intensity="4" baseNumber="2" baseTime="30" />
     <asteroid intensity="3" baseNumber="3" baseTime="30" />
     <comet intensity="3" baseNumber="3" baseTime="30" />
     <onyx intensity="2" baseNumber="3" baseTime="30" />
     <blackhole intensity="1" baseNumber="3" baseTime="30" />
-    <solarwind intensity="1" baseNumber="3" baseTime="30" />
     <emp intensity="1" baseNumber="3" baseTime="30" />
     <powerups intensity="1" baseNumber="1" baseTime="5"
-              speed="true" slow="true" score="true" />
+              speed="true" slow="true" score="true"
+              circleRepair="true" threeWayRepair="true" />
   </level15>
-
-  <!--
-    <testLevel score="100000" erodeRate="0">
-    <powerups intensity="5" baseNumber="1" baseTime="5"
-              speed="true" slow="false" score="false" />
-    </testLevel>
-  -->
 
 </configuration>

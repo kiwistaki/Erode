@@ -131,6 +131,15 @@
     <Compile Include="Assets\Imported\PS-ProgressBar\Scripts\ProgressBarProView.cs" />
     <Compile Include="Assets\Imported\PS-ProgressBar\Scripts\Utils\ImageSlicedMirror.cs" />
     <Compile Include="Assets\Imported\PS-ProgressBar\Scripts\Utils\Utils.cs" />
+    <Compile Include="Assets\Imported\Space Background Multipack\Scripts\AsteroidBelt.cs" />
+    <Compile Include="Assets\Imported\Space Background Multipack\Scripts\AsteroidBeltOrbit.cs" />
+    <Compile Include="Assets\Imported\Space Background Multipack\Scripts\GUIControls.cs" />
+    <Compile Include="Assets\Imported\Space Background Multipack\Scripts\IntensityControl.cs" />
+    <Compile Include="Assets\Imported\Space Background Multipack\Scripts\LoopingSprite.cs" />
+    <Compile Include="Assets\Imported\Space Background Multipack\Scripts\Orbit2D.cs" />
+    <Compile Include="Assets\Imported\Space Background Multipack\Scripts\ParralaxItem.cs" />
+    <Compile Include="Assets\Imported\Space Background Multipack\Scripts\ShieldPulse.cs" />
+    <Compile Include="Assets\Imported\Space Background Multipack\Scripts\StarFlickering.cs" />
     <Compile Include="Assets\Obstacles\Asteroide\AsteroideController.cs" />
     <Compile Include="Assets\Obstacles\Asteroide\AsteroideSpawn.cs" />
     <Compile Include="Assets\Obstacles\Barriere\BarriereController.cs" />
@@ -183,6 +192,7 @@
     <Compile Include="Assets\Particles\Shaders\_Common\IEBase.cs" />
     <Compile Include="Assets\PowerUp\AbstractPowerUp.cs" />
     <Compile Include="Assets\PowerUp\Ammo\Ammo.cs" />
+    <Compile Include="Assets\PowerUp\PowerUpController.cs" />
     <Compile Include="Assets\PowerUp\PowerUpSpawner.cs" />
     <Compile Include="Assets\PowerUp\ScoreBoost\ScoreBoost.cs" />
     <Compile Include="Assets\PowerUp\SlowMotion\SlowMotion.cs" />
@@ -219,6 +229,7 @@
     <Compile Include="Assets\Scripts\Spawners\ChargerSpawner.cs" />
     <Compile Include="Assets\Scripts\Spawners\CometSpawner.cs" />
     <Compile Include="Assets\Scripts\Spawners\EMPSpawner.cs" />
+    <Compile Include="Assets\Scripts\Spawners\HitIndicatorController.cs" />
     <Compile Include="Assets\Scripts\Spawners\HunterSpawner.cs" />
     <Compile Include="Assets\Scripts\Spawners\OnyxSpawner.cs" />
     <Compile Include="Assets\Scripts\Spawners\PowerUpSpawner.cs" />
@@ -239,6 +250,10 @@
     <None Include="Assets\Imported\Retro Info Boxes\Fonts\lobster-two\SIL Open Font License.txt" />
     <None Include="Assets\Imported\Retro Info Boxes\Fonts\lobster\License.txt" />
     <None Include="Assets\Imported\Retro Info Boxes\Fonts\lobster\Readme.txt" />
+    <None Include="Assets\Imported\Space Background Multipack\Materials\Unlit Screen Blend-Looping + Flickering.shader" />
+    <None Include="Assets\Imported\Space Background Multipack\Materials\Unlit Screen Blend-Looping.shader" />
+    <None Include="Assets\Imported\Space Background Multipack\Materials\Unlit-Looping.shader" />
+    <None Include="Assets\Imported\Space Background Multipack\Skybox\Material\Why is this darker.txt" />
     <None Include="Assets\Obstacles\Blackhole\HiddenTwistEffect.shader" />
     <None Include="Assets\Particles\Editor Extensions\Utilities\Multi-Asset Renamer\README.txt" />
     <None Include="Assets\Particles\README - Action VFX.txt" />

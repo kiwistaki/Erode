@@ -24,6 +24,8 @@ namespace Assets.Scripts.Control
             //Show hammer
             this._playerController.EquipWeapons(PlayerController.EquippedWeapons.Hammer);
             this._playerController.SetHammerType(HammerController.HammerType.Spin);
+            this._playerController.ShooterAttackEvent -= this._playerController.HitByShooterAttack;
+            this._playerController.ShooterAttackEvent += this._playerController.HitByShooterAttackSpin;
         }
 
         public override void OnStateUpdate()
@@ -67,6 +69,8 @@ namespace Assets.Scripts.Control
             {
                 this._playerController.PlayerAnimator.SetTrigger("SpinEnd");
             }
+            this._playerController.ShooterAttackEvent += this._playerController.HitByShooterAttack;
+            this._playerController.ShooterAttackEvent -= this._playerController.HitByShooterAttackSpin;
         }
 
         public override PlayerCharacterStateMachine.PlayerStates GetStateType()

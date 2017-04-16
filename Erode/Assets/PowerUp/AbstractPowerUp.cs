@@ -5,6 +5,7 @@ using System.Text;
 using Assets.Scripts.Control;
 using Assets.Scripts.Utils;
 using UnityEngine;
+using Assets.Scripts.HexGridGenerator;
 
 namespace Assets.PowerUp
 {
@@ -15,11 +16,13 @@ namespace Assets.PowerUp
             SuperSpeed,
             ScoreMultiplier,
             SlowMotion,
+            CircleRepair,
+            ThreeWayRepair,
             Ammo,
             PowerUpCount
         }
 
-        public float Lifetime = 5.0f;
+        public float Lifetime = 7.0f;
         public float Duration = 5.0f;
 
         private float _lifetime = 0.0f;
@@ -51,10 +54,14 @@ namespace Assets.PowerUp
                 //Reset the lifetime
                 this._lifetime = this.Duration;
                 this._playerController = collider.GetComponent<PlayerController>();
+				this._playerController.GetComponents<AudioSource> () [3].Play ();
 
-                //Disable collision
-                this.GetComponent<MeshRenderer>().enabled = false;
-                this.GetComponent<BoxCollider>().enabled = false;
+                //Disable collision only on physical powerup objects
+                if (this.gameObject.GetComponent<Tile>() == null)
+                {
+                    this.GetComponent<MeshRenderer>().enabled = false;
+                    this.GetComponent<BoxCollider>().enabled = false;
+                }
 
                 this.ActivatePowerUp();
             }

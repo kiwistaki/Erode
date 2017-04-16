@@ -215,7 +215,6 @@ public class ChargerController : MonoBehaviour
 
     public void ProcessMovement()
     {
-        //Changer pour le charger?
         var lookat = new Vector3(Target.position.x - myTransform.position.x, 0, Target.position.z - myTransform.position.z);
         myTransform.rotation = Quaternion.Slerp(myTransform.rotation, Quaternion.LookRotation(lookat), RotationSmoothing * Time.deltaTime);
         myTransform.Translate(Vector3.forward * MoveSpeed * Time.deltaTime);

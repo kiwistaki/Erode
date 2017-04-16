@@ -21,6 +21,7 @@ namespace Assets.Scripts.Control
         }
 
         private readonly PlayerController _playerController;
+        private PlayerStates _playerState = PlayerStates.Undefined;
 
         public PlayerCharacterStateMachine(PlayerController playerController)
             : base(new IdleRunState(playerController))
@@ -28,8 +29,14 @@ namespace Assets.Scripts.Control
             this._playerController = playerController;
         }
 
+        public PlayerStates GetState()
+        {
+            return _playerState;
+        }
+
         public void ChangeState(PlayerStates state, object args)
         {
+            _playerState = state;
             switch (state)
             {
                 case PlayerStates.Undefined:

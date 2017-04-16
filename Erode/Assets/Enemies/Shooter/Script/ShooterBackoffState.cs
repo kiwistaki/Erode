@@ -13,7 +13,6 @@ namespace Assets.Scripts.Control
 
         public override void Enter()
         {
-            this._shooterController.ShooterAnimator.SetTrigger("ShooterBackoff");
         }
 
         public override void OnStateUpdate()
@@ -25,7 +24,7 @@ namespace Assets.Scripts.Control
             else
             {
                 this._shooterController.ChangeState(ShooterCharacterStateMachine.ShooterState.Idle, null);
-                this._shooterController.ShooterAnimator.SetTrigger("ShooterIdle");
+                //this._shooterController.ShooterAnimator.SetTrigger("ShooterIdle");
             }
         }
 

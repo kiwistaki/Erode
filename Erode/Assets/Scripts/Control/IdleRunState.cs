@@ -16,6 +16,8 @@ namespace Assets.Scripts.Control
         {
             //Hide weapons
             this._playerController.EquipWeapons(PlayerController.EquippedWeapons.None);
+            //Clean hammer
+            this._playerController.CleanHammerChargeVfx();
             //Register to hunter attack event
             this._playerController.HunterAttackEvent += this._playerController.HitByHunterAttack;
             this._playerController.ShooterAttackEvent += this._playerController.HitByShooterAttack;

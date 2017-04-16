@@ -9,7 +9,8 @@ namespace Assets.Scripts.Spawners
 {
     class CometSpawner : AbstractSpawner
     {
-        public GameObject RedXComet;
+        public GameObject CometTargetRayVFX;
+        public GameObject CometTargetFlareVFX;
         public GameObject[] Comet;
 
         public float CometSpeed = 10f;
@@ -63,7 +64,8 @@ namespace Assets.Scripts.Spawners
             //Prendre les coordonnées pour faire apparaitre un PNG en x et z.
 
             Vector3 posTarget = new Vector3(positionOnGrid.x, 0.5f, positionOnGrid.z);
-            Instantiate(this.RedXComet, posTarget, Quaternion.Euler(90, 0, 0), _spawnObjectParent.transform);
+            Instantiate(this.CometTargetRayVFX, posTarget, Quaternion.Euler(0, 0, 0));
+            Instantiate(this.CometTargetFlareVFX, posTarget, Quaternion.Euler(0, 0, 0));
 
         }
     }

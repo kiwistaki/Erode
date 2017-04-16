@@ -14,7 +14,6 @@ namespace Assets.PowerUp.SuperSpeed
         public GameObject ExpirePrefab;
 
         private GameObject _trail;
-        private bool _timersLock = false;
         private PowerUpController _powerUpController;
 
         new void Awake()

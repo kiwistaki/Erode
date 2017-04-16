@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class GUIControls : MonoBehaviour
 {
@@ -115,15 +116,14 @@ public class GUIControls : MonoBehaviour
 
             if(currentScene < 0)
                 currentScene = TotalScenes - 1;
-
-            Application.LoadLevel(currentScene);
+            SceneManager.LoadScene(currentScene);
         }
 
         if(GUILayout.Button("Next"))
         {
             currentScene = (currentScene + 1) % TotalScenes;
 
-            Application.LoadLevel(currentScene);
+            SceneManager.LoadScene(currentScene);
         }
 
         GUILayout.EndHorizontal();

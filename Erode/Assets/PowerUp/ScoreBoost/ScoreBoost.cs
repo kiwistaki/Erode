@@ -12,8 +12,6 @@ namespace Assets.PowerUp.ScoreBoost
 
     public class ScoreBoost : AbstractPowerUp
     {
-
-        private ScoreManager _scoreManager;
         private PowerUpController _powerUpController;
         public float RotationSpeed = 60f;
 
@@ -26,7 +24,6 @@ namespace Assets.PowerUp.ScoreBoost
                 , "looptype", iTween.LoopType.pingPong
                 , "easetype", iTween.EaseType.easeInOutBack
                 ));
-            this._scoreManager = GameObject.Find("MainCamera").GetComponent<ScoreManager>();
             _powerUpController = Camera.main.GetComponent<PowerUpController>();
         }
 

@@ -43,6 +43,7 @@ namespace Assets.Scripts.Control
             this._playerController.EMPEvent -= this._playerController.InjuredPlayer;
             this._playerController.EMPEvent += this._playerController.InjuredPlayerDelayed;
             this._playerController.ShooterAttackEvent -= this._playerController.HitByShooterAttack;
+            this._playerController.GetComponents<AudioSource>()[1].Play();
         }
 
         public override void OnStateUpdate()

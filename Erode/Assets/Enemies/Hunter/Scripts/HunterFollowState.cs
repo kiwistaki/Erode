@@ -8,10 +8,11 @@ namespace Assets.Scripts.Control
 {
     public class HunterFollowState: HunterState
     {
+        private float _followTimer = 0.5f;
+
         public HunterFollowState(HunterController hunter) : base(hunter, null)
         {
         }
-
 
         public override void Enter()
         {
@@ -22,17 +23,18 @@ namespace Assets.Scripts.Control
 
         public override void OnStateUpdate()
         {
-            if (this._hunterController.IsWithinAttackRange())
+            if ((this._followTimer -= Time.deltaTime) <= 0.0f && this._hunterController.IsWithinAttackRange())
             {
                 this._hunterController.ChangeState(HunterCharacterStateMachine.HunterState.Attack);
             }
-
-            if(!this._hunterController.WillFollow())
+            else if(!this._hunterController.WillFollow())
             {
                 this._hunterController.ChangeState(HunterCharacterStateMachine.HunterState.Idle);
             }
-
-            this._hunterController.ProcessMovement();
+            else
+            {
+                this._hunterController.ProcessMovement();
+            }
         }
 
         public override void Exit()

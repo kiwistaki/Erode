@@ -88,27 +88,32 @@ public class ScoreManager : MonoBehaviour {
         {
             case ScoreManager.ScoreType.Asteroid:
                 points = Instantiate(this.PointPopup, dedPos, Quaternion.identity);
-                points.GetComponent<TextMesh>().text = asteroidHitScore.ToString();
+                int asteroidScore = asteroidHitScore * scoreMultiplier;
+                points.GetComponent<TextMesh>().text = asteroidScore.ToString();
                 
                 break;
             case ScoreManager.ScoreType.Hunter:
                 points = Instantiate(this.PointPopup, dedPos, Quaternion.identity);
-                points.GetComponent<TextMesh>().text = hunterKillScore.ToString();
+                int hunterScore = hunterKillScore * scoreMultiplier;
+                points.GetComponent<TextMesh>().text = hunterScore.ToString();
                
                 break;
             case ScoreManager.ScoreType.Shooter:
                 points = Instantiate(this.PointPopup, dedPos, Quaternion.identity);
-                points.GetComponent<TextMesh>().text = shooterKillScore.ToString();
+                int shooterScore = shooterKillScore * scoreMultiplier;
+                points.GetComponent<TextMesh>().text = shooterScore.ToString();
                
                 break;
             case ScoreManager.ScoreType.Charger:
                 points = Instantiate(this.PointPopup, dedPos, Quaternion.identity);
-                points.GetComponent<TextMesh>().text = chargerKillScore.ToString();
+                int chargerScore = chargerKillScore * scoreMultiplier;
+                points.GetComponent<TextMesh>().text = chargerScore.ToString();
               
                 break;
             case ScoreManager.ScoreType.EMP:
                 points = Instantiate(this.PointPopup, dedPos, Quaternion.identity);
-                points.GetComponent<TextMesh>().text = empDestroyScore.ToString();
+                int empScore = empDestroyScore * scoreMultiplier;
+                points.GetComponent<TextMesh>().text = empScore.ToString();
               
                 break;
         }

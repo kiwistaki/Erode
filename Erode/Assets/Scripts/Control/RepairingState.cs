@@ -109,10 +109,10 @@ namespace Assets.Scripts.Control
                 //Repair neighbors
                 if (hittedTile != null)
                 {
-                    hittedTile.RepairFromGun(this._playerController.RepairToolController.transform.position);
+                    hittedTile.RepairFromPosition(this._playerController.RepairToolController.transform.position, true);
                     foreach (Tile t in hittedTile.Neighbours)
                     {
-                        t.RepairFromGun(this._playerController.RepairToolController.transform.position);
+                        t.RepairFromPosition(this._playerController.RepairToolController.transform.position, true);
                     }
                 }
             }
@@ -142,10 +142,10 @@ namespace Assets.Scripts.Control
                 //Repair neighbors
                 if (hittedTile != null)
                 {
-                    hittedTile.RepairFromGun(this._playerController.RepairToolController.transform.position);
+                    hittedTile.RepairFromPosition(this._playerController.RepairToolController.transform.position, true);
                     foreach (Tile t in hittedTile.Neighbours)
                     {
-                        t.RepairFromGun(this._playerController.RepairToolController.transform.position);
+                        t.RepairFromPosition(this._playerController.RepairToolController.transform.position, true);
                     }
                 }
             }
@@ -172,7 +172,7 @@ namespace Assets.Scripts.Control
                 }
                 if (minTile != null)
                 {
-                    minTile.RepairFromGun(this._playerController.RepairToolController.transform.position);
+                    minTile.RepairFromPosition(this._playerController.RepairToolController.transform.position, true);
                     this._boxTimer -= this._playerController.BoxRepairTimer;
                     this._playerController.AmmoCount -= 1;
                     this._playerController.RepairBoxController.CollidingTiles.Remove(minTile.GetHashCode());

@@ -52,11 +52,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f95eff96030e3d469744f7d5612ed00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BlackholeVFX: {fileID: 180324, guid: 01ad37a255192ce41bc30a2ad6fa1be7, type: 2}
-  BlackholeGraviton: {fileID: 1206507549570782, guid: de0eec4c686eefe49bb451a4e981528a,
+  BlackholeVFX: {fileID: 1463193177008308, guid: c4db14e73294ffe4c815188fffd66b41,
     type: 2}
   MoveSpeed: 50
-  _LifeExpectancy: 5
+  LifeExpectancy: 5
   GetTargetTime: 1
   PlayerMultiplier: 0.4
 --- !u!136 &136044334727161944
@@ -69,6 +68,6 @@ CapsuleCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.5
-  m_Height: 2
+  m_Height: 10
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
