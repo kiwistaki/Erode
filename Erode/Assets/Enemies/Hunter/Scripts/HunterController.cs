@@ -183,10 +183,8 @@ public class HunterController : MonoBehaviour
         switch (other.tag)
         {
             case "Target":
-                //do nothing
-                break;
-
             case "Boundary":
+            case "SpinReflect":
                 //do nothing
                 break;
 

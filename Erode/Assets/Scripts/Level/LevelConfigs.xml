@@ -9,7 +9,7 @@
               circleRepair="false" threeWayRepair="false" />
   </level1>
   <level2 score="1500" erodeRate="0.30">
-    <hunter intensity="2" baseNumber="3" baseTime="30" />
+    <hunter intensity="2" baseNumber="4" baseTime="30" />
     <shooter intensity="1" baseNumber="2" baseTime="30" />
     <comet intensity="2" baseNumber="2" baseTime="30" />
     <asteroid intensity="1" baseNumber="4" baseTime="30" />
@@ -18,8 +18,8 @@
               circleRepair="false" threeWayRepair="false" />
   </level2>
   <level3 score="3000" erodeRate="0.30">
-    <hunter intensity="1" baseNumber="4" baseTime="30" />
-    <shooter intensity="3" baseNumber="2" baseTime="30" />
+    <hunter intensity="2" baseNumber="4" baseTime="30" />
+    <shooter intensity="2" baseNumber="2" baseTime="30" />
     <asteroid intensity="1" baseNumber="4" baseTime="30" />
     <comet intensity="1" baseNumber="2" baseTime="30" />
     <powerups intensity="1" baseNumber="1" baseTime="5"
@@ -61,7 +61,7 @@
   </level6>
   <level7 score="4000" erodeRate="0.30">
     <hunter intensity="2" baseNumber="4" baseTime="30" />
-    <shooter intensity="2" baseNumber="2" baseTime="30" />
+    <shooter intensity="1" baseNumber="2" baseTime="30" />
     <charger intensity="1" baseNumber="2" baseTime="30" />
     <comet intensity="2" baseNumber="2" baseTime="30" />
     <onyx intensity="2" baseNumber="1" baseTime="60" />
@@ -86,7 +86,7 @@
   <level9 score="4000" erodeRate="0.30">
     <hunter intensity="2" baseNumber="4" baseTime="30" />
     <shooter intensity="1" baseNumber="3" baseTime="30" />
-    <charger intensity="1" baseNumber="2" baseTime="30" />
+    <charger intensity="2" baseNumber="2" baseTime="30" />
     <asteroid intensity="3" baseNumber="4" baseTime="30" />
     <blackhole intensity="2" baseNumber="2" baseTime="30" />
     <onyx intensity="1" baseNumber="1" baseTime="60" />

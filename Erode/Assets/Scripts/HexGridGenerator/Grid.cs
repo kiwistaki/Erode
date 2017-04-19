@@ -384,7 +384,7 @@ namespace Assets.Scripts.HexGridGenerator
                             pos.z = this.hexRadius * 3.0f / 2.0f * r;
                             break;
                     }
-                    pos.y = Random.value * 0.33f;
+                    pos.y = Random.value * 0.28f;
                     tile = this.CreateHexGO(pos, ("Hex[" + q + "," + r + "," + (-q - r).ToString() + "]"));
                     tile.Index = new CubeIndex(q, r, -q - r);
                     this._grid.Add(tile.Index.ToString(), tile);

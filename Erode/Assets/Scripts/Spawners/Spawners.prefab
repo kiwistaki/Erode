@@ -109,7 +109,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5ea898aaa366b440894c875c2fd8435, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RedXComet: {fileID: 1762140313324216, guid: f75a1de35cdc34c44971129dcea3fd58, type: 2}
+  CometTargetRayVFX: {fileID: 1038244615561478, guid: 3b0d8085575318b44bee51c450c99bd8,
+    type: 2}
+  CometTargetFlareVFX: {fileID: 1289435102627012, guid: 04f77f2ec64691541922e3694dea0cca,
+    type: 2}
   Comet:
   - {fileID: 173668, guid: ae4427e80dceffe47b5179ce000667cb, type: 2}
   - {fileID: 190680, guid: ead4c151b2850004782f62d3ac573cbe, type: 2}

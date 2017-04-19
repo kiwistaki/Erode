@@ -25,6 +25,7 @@ TagManager:
   - Boundary
   - Shooter
   - WindController
+  - SpinReflect
   layers:
   - Default
   - TransparentFX

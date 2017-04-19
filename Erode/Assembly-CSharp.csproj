@@ -46,6 +46,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Characters\Horatio\IdleBehaviour.cs" />
      <Compile Include="Assets\Characters\Horatio\StrikeAnimBehaviour.cs" />
      <Compile Include="Assets\Enemies\Charger\Scripts\ChargerAttackAnimBehaviour.cs" />
      <Compile Include="Assets\Enemies\Charger\Scripts\ChargerAttackState.cs" />
@@ -86,7 +87,6 @@
      <Compile Include="Assets\Enemies\Shooter\Script\ShooterSpawner.cs" />
      <Compile Include="Assets\Enemies\Shooter\Script\ShooterState.cs" />
      <Compile Include="Assets\Enemies\Spawner\SpawnerController.cs" />
-     <Compile Include="Assets\IdleBehaviour.cs" />
      <Compile Include="Assets\Imported\PS-ProgressBar\Examples\Scripts\AssetStoreLink.cs" />
      <Compile Include="Assets\Imported\PS-ProgressBar\Examples\Scripts\TestBarControl.cs" />
      <Compile Include="Assets\Imported\PS-ProgressBar\Examples\Scripts\TestPageSwitch.cs" />
@@ -185,11 +185,13 @@
      <Compile Include="Assets\Scripts\Control\RepairBoxController.cs" />
      <Compile Include="Assets\Scripts\Control\RepairToolController.cs" />
      <Compile Include="Assets\Scripts\Control\RepairingState.cs" />
+     <Compile Include="Assets\Scripts\Control\SpinReflectContoller.cs" />
      <Compile Include="Assets\Scripts\Control\SpinState.cs" />
      <Compile Include="Assets\Scripts\Control\StunnedState.cs" />
      <Compile Include="Assets\Scripts\Game\EndGameBehaviour.cs" />
      <Compile Include="Assets\Scripts\Game\Highscore.cs" />
      <Compile Include="Assets\Scripts\Game\LeaderboardManager.cs" />
+     <Compile Include="Assets\Scripts\Game\PlanetController.cs" />
      <Compile Include="Assets\Scripts\Game\PointGameObjectController.cs" />
      <Compile Include="Assets\Scripts\Game\ScoreManager.cs" />
      <Compile Include="Assets\Scripts\GameStateMachine\GameManager.cs" />

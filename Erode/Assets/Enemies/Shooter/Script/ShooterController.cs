@@ -236,7 +236,7 @@ public class ShooterController : MonoBehaviour
                     var penetration = Mathf.Abs(maxRad - delta.magnitude);
                     var movement = delta.normalized*penetration;
                     movement.y = 0;
-                    this.transform.position += movement;
+                    this.transform.position += movement * Time.deltaTime * this.MoveSpeed;
                 }
 
                 break;
@@ -256,7 +256,7 @@ public class ShooterController : MonoBehaviour
                     var penetration = Mathf.Abs(maxRad - delta.magnitude);
                     var movement = delta.normalized * penetration;
                     movement.y = 0;
-                    this.transform.position += movement;
+                    this.transform.position += movement * Time.deltaTime * this.MoveSpeed;
                 }
 
                 break;

@@ -10,11 +10,13 @@ namespace Assets.Scripts.Control
         public GameObject RepairRoot;
         public GameObject RepairVFX;
         public GameObject HitVfxPrefab;
+        public GameObject SpinTrailPrefab;
         public GameObject[] HammerChargingVfx = new GameObject[3];
         public GameObject HammerChargingBurstVfx;
         public HammerController HammerController = null;
         public RepairToolController RepairToolController = null;
         public RepairBoxController RepairBoxController = null;
+        public SpinReflectContoller SpinReflectController = null;
         [Range(0.0f, 10.0f)]
         public float MovementSpeed = 5.0f;
         [Range(0.0f, 100.0f)]
@@ -202,6 +204,7 @@ namespace Assets.Scripts.Control
 
         private PlayerCharacterStateMachine _playerCharacterStateMachine = null;
         private List<GameObject> _hammerVfx = new List<GameObject>();
+        private TrailRenderer _spinTrail;
         private bool _isInjured = false;
         private float _ammoRegenTimer = 0.0f;
 
@@ -455,6 +458,25 @@ namespace Assets.Scripts.Control
         public void InjuredPlayerDelayed()
         {
             this._isInjured = true;
+        }
+
+        public void ShowSpinTrail()
+        {
+            if(this._spinTrail == null)
+            {
+                this._spinTrail = Instantiate(this.SpinTrailPrefab, this.HammerRoot.transform.position, this.HammerRoot.transform.rotation, this.HammerRoot.transform).GetComponent<TrailRenderer>();
+                this.SpinReflectController.gameObject.SetActive(true);
+            }
+        }
+
+        public void HideSpinTrail()
+        {
+            if (this._spinTrail)
+            {
+                Destroy(this._spinTrail.gameObject);
+                this._spinTrail = null;
+                this.SpinReflectController.gameObject.SetActive(false);
+            }
         }
     }
 }

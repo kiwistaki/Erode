@@ -29,7 +29,7 @@ public class BoltController : MonoBehaviour
     {
         this.transform.Translate(this._direction * this.Speed * Time.deltaTime, Space.World);
         if(this.transform.position.magnitude >= 50)
-            Destroy(this.gameObject);
+            this.TimeToDie();
     }
 
     public void ReverseDirection()
@@ -51,6 +51,9 @@ public class BoltController : MonoBehaviour
         switch (other.tag)
         {
             case "Bolt":
+            case "SpinReflect":
+            case "Target":
+            case "Boundary":
                 break;
 
             case "Player":
@@ -59,7 +62,6 @@ public class BoltController : MonoBehaviour
 
             case "Hammer":
                 other.GetComponent<HammerController>().OnBoltCollision(this.gameObject, PlayerStunnedTime);
-
                 break;
 
             default:

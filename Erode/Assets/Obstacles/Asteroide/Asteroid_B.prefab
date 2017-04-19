@@ -109,7 +109,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: e9cdba1ac963f474bbfd3b5a4b5b4fe3, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.6
+  m_Volume: 0.35
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -186,7 +186,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 190680}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f0f515f1e13fe041b3e69469973cf7e, type: 3}
+  m_Script: {fileID: 11500000, guid: d386c5da43acae447bbf15626e486af9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   OutOfZoneMagnitude: 80

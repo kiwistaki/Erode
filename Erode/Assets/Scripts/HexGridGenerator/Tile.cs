@@ -264,7 +264,7 @@ namespace Assets.Scripts.HexGridGenerator
                 iTween.iTween.ShakePosition(this.gameObject, iTween.iTween.Hash(
                     "name", "Shake",
                     "amount", new Vector3(Grid.inst.ShakeStrenght, Grid.inst.ShakeStrenght, Grid.inst.ShakeStrenght),
-                    "time", 30.0f,
+                    "time", 300.0f,
                     "looptype", iTween.iTween.LoopType.loop,
                     "onstarttarget", this.gameObject,
                     "onstart", "ResetTransform",

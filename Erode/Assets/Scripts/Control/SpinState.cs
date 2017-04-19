@@ -26,6 +26,8 @@ namespace Assets.Scripts.Control
             this._playerController.SetHammerType(HammerController.HammerType.Spin);
             this._playerController.ShooterAttackEvent -= this._playerController.HitByShooterAttack;
             this._playerController.ShooterAttackEvent += this._playerController.HitByShooterAttackSpin;
+            //Show spin trail
+            this._playerController.ShowSpinTrail();
         }
 
         public override void OnStateUpdate()
@@ -71,6 +73,7 @@ namespace Assets.Scripts.Control
             }
             this._playerController.ShooterAttackEvent += this._playerController.HitByShooterAttack;
             this._playerController.ShooterAttackEvent -= this._playerController.HitByShooterAttackSpin;
+            this._playerController.HideSpinTrail();
         }
 
         public override PlayerCharacterStateMachine.PlayerStates GetStateType()

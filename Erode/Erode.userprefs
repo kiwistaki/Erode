@@ -1,9 +1,10 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Control\StunnedState.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\PowerUp\AbstractPowerUp.cs">
     <Files>
       <File FileName="Assets\Scripts\Control\RepairingState.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Control\StunnedState.cs" Line="1" Column="1" />
+      <File FileName="Assets\PowerUp\AbstractPowerUp.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

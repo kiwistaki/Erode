@@ -242,9 +242,7 @@ public class ChargerController : MonoBehaviour
         switch (other.tag)
         {
             case "Target":
-                //do nothing
-                break;
-
+            case "SpinReflect":
             case "Boundary":
                 //do nothing
                 break;

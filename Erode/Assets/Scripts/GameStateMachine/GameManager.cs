@@ -253,7 +253,7 @@ public class GameManager : MonoBehaviour {
                 context.State = new InGameState(g_manager);
             }
 
-            if (Input.GetButtonDown("RightBumper")) 
+            /*if (Input.GetButtonDown("RightBumper")) 
             {
                 int levelInt = (int)g_manager._levelManager.getLevel();
                 levelInt += 1;
@@ -275,7 +275,7 @@ public class GameManager : MonoBehaviour {
                     GameObject.Find("LevelText").GetComponent<Text>().text = "Level " + ++levelInt;
 
                 }
-            }
+            }*/
         }
     }
 
